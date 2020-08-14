@@ -1,0 +1,19 @@
+.contentWrapper{
+    grid-area: c;
+    background-color: chartreuse;
+}
+
+.profImg{
+    width: 100%;
+    height: 300px;
+}
+
+.item{
+    color: blueviolet;
+}
+
+.profileImg{
+    width: 40px;
+    height: 40px;
+    border-radius: 30px;
+}

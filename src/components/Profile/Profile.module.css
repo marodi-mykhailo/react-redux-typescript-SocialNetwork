@@ -2,3 +2,8 @@
     grid-area: c;
     background-color: chartreuse;
 }
+
+.profImg{
+    width: 100%;
+    height: 300px;
+}
