@@ -9,3 +9,7 @@
   /* grid-gap: 10px; */
 }
 
+.appWrapperContent{
+  grid-area: c;
+  background-color: chartreuse;
+}
