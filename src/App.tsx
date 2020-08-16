@@ -5,9 +5,14 @@ import NavBar from "./components/NavBar/NavBar";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from 'react-router-dom';
+import {RootStateType} from "./redux/state";
 
 
-function App() {
+type AppPropsType = {
+    state: RootStateType
+}
+
+function App(props: AppPropsType) {
 
     return (
 
@@ -16,8 +21,16 @@ function App() {
                 <Head/>
                 <NavBar/>
                 <div className={styles.appWrapperContent}>
-                    <Route path='/dialogs' component={Dialogs}/>
-                    <Route path='/profile' component={Profile}/>
+                    <Route path='/dialogs'
+                           render={() => <Dialogs
+                               state={props.state.dialogsPage}
+                           />
+                           }/>
+                    <Route path='/profile'
+                           component={() =>
+                               <Profile
+                                   state={props.state.profilePage}/>
+                           }/>
                 </div>
             </div>
         </BrowserRouter>

@@ -1,15 +1,17 @@
 import React from "react";
 import styles from "./MyPosts.module.css";
 import Post from "./Post/Post";
+import {postType} from "../../../redux/state";
 
-const MyPosts = () => {
+type myPostsPropsType = {
+    post: Array<postType>
+}
 
-    const post = [
-        {id: '1', message: 'Hi, how are you?', likesCount: 5},
-        {id: '2', message: 'I love React.js', likesCount: 300},
-    ]
+const MyPosts = (props: myPostsPropsType) => {
 
-    let postsElements = post.map(post => <Post message={post.message} likesCount={post.likesCount}/>)
+
+
+    let postsElements = props.post.map(post => <Post message={post.message} likesCount={post.likesCount}/>)
 
     return (
         <div className={styles.postsBlock}>
