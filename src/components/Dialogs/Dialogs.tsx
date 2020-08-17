@@ -5,18 +5,18 @@ import Message from "./DialogItem/Message/Message";
 import {dialogsPageType, RootStateType} from "../../redux/state";
 
 type DialogsPropsType = {
-    state: dialogsPageType
+    dialogPage: dialogsPageType
 }
 
 
 const Dialogs = (props: DialogsPropsType) => {
 
 
-    let dialogsElements = props.state.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id}/>)
+    let dialogsElements = props.dialogPage.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id}/>)
 
 
 
-    let messagesElements = props.state.messages.map(message => <Message message={message.message}/>)
+    let messagesElements = props.dialogPage.messages.map(message => <Message message={message.message}/>)
 
     return (
         <div className={style.dialogs}>

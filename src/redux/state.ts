@@ -1,3 +1,5 @@
+import {renderEntireTree} from "../render";
+
 export type postType = {
     id: string
     message: string
@@ -16,6 +18,7 @@ export type messageType = {
 
 export type profilePageType = {
     post: Array<postType>
+    newPostText: string
 }
 
 export type dialogsPageType = {
@@ -35,6 +38,7 @@ let state: RootStateType = {
             {id: '1', message: 'Hi, how are you?', likesCount: 5},
             {id: '2', message: 'I love React.js', likesCount: 300},
         ],
+        newPostText: 'k'
     },
     dialogsPage: {
         dialogs: [
@@ -49,6 +53,23 @@ let state: RootStateType = {
             {id: '3', message: 'Bue have a good day'},
         ]
     }
+}
+
+export const addPost = () => {
+    const newPost:postType = {
+        id: '3',
+        message: state.profilePage.newPostText,
+        likesCount: 0
+    }
+    state.profilePage.post.push(newPost);
+    state.profilePage.newPostText = ''
+    renderEntireTree(state)
+
+}
+
+export const updateNewPostText = (newText: string) => {
+    state.profilePage.newPostText = newText;
+    renderEntireTree(state)
 }
 
 export default state;
