@@ -10,7 +10,6 @@ type profilePropsType = {
 }
 
 const Profile = (props: profilePropsType) => {
-    debugger
     return (
         <div className={styles.contentWrapper}>
             <ProfileInfo/>
