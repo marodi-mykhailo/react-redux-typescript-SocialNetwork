@@ -10,12 +10,12 @@ import {RootStateType} from "./redux/state";
 
 type AppPropsType = {
     state: RootStateType
-    addPost: () => void
-    updateNewPostText: (newText:string) => void
+    dispatch: any
+
 }
 
 function App(props: AppPropsType) {
-
+debugger
     return (
 
         <BrowserRouter>
@@ -32,8 +32,7 @@ function App(props: AppPropsType) {
                            component={() =>
                                <Profile
                                    profilePage={props.state.profilePage}
-                                   updateNewPostText = {props.updateNewPostText}
-                                   addPost={props.addPost}/>
+                                   dispatch={props.dispatch}/>
                            }/>
                 </div>
             </div>

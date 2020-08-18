@@ -21,29 +21,30 @@ let store: any = {
             ]
         }
     },
-    getState(){
+    getState() {
         return this._state
+    },
+    subscribe(observer: any) {
+        this._callSubscriber = observer
     },
     _callSubscriber(state: RootStateType) {
         console.log("sss")
     },
-    addPost() {
-        const newPost: postType = {
-            id: '3',
-            message: this._state.profilePage.newPostText,
-            likesCount: 0
+    dispatch(action:any) {
+        if(action.type === "ADD-POST"){
+            const newPost: postType = {
+                id: '3',
+                message: this._state.profilePage.newPostText,
+                likesCount: 0
+            }
+            this._state.profilePage.post.push(newPost);
+            this._state.profilePage.newPostText = ''
+            this._callSubscriber(this._state)
+        }else if(action.type === 'UPDATE-POST-TEXT'){
+            debugger
+            this._state.profilePage.newPostText = action.newText;
+            this._callSubscriber(this._state)
         }
-        this._state.profilePage.post.push(newPost);
-        this._state.profilePage.newPostText = ''
-        this._callSubscriber(this._state)
-
-    },
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText;
-        this._callSubscriber(this._state)
-    },
-    subscribe(observer: any){
-        this._callSubscriber = observer
     }
 
 }
@@ -80,8 +81,6 @@ export type RootStateType = {
     dialogsPage: dialogsPageType
 }
 
-export type RootStoreType = {
-
-}
+export type RootStoreType = {}
 
 export default store;
