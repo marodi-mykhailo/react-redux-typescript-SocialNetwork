@@ -1,4 +1,53 @@
-import {renderEntireTree} from "../render";
+let store: any = {
+    _state: {
+        profilePage: {
+            post: [
+                {id: '1', message: 'Hi, how are you?', likesCount: 5},
+                {id: '2', message: 'I love React.js', likesCount: 300},
+            ],
+            newPostText: 'k'
+        },
+        dialogsPage: {
+            dialogs: [
+                {id: '1', name: 'Misha'},
+                {id: '2', name: 'Yura'},
+                {id: '3', name: 'Nastya'},
+                {id: '4', name: 'Ivan'},
+            ],
+            messages: [
+                {id: '1', message: 'Hi'},
+                {id: '2', message: 'How is your day?'},
+                {id: '3', message: 'Bue have a good day'},
+            ]
+        }
+    },
+    getState(){
+        return this._state
+    },
+    _callSubscriber(state: RootStateType) {
+        console.log("sss")
+    },
+    addPost() {
+        const newPost: postType = {
+            id: '3',
+            message: this._state.profilePage.newPostText,
+            likesCount: 0
+        }
+        this._state.profilePage.post.push(newPost);
+        this._state.profilePage.newPostText = ''
+        this._callSubscriber(this._state)
+
+    },
+    updateNewPostText(newText: string) {
+        this._state.profilePage.newPostText = newText;
+        this._callSubscriber(this._state)
+    },
+    subscribe(observer: any){
+        this._callSubscriber = observer
+    }
+
+}
+
 
 export type postType = {
     id: string
@@ -31,45 +80,8 @@ export type RootStateType = {
     dialogsPage: dialogsPageType
 }
 
-
-let state: RootStateType = {
-    profilePage: {
-        post: [
-            {id: '1', message: 'Hi, how are you?', likesCount: 5},
-            {id: '2', message: 'I love React.js', likesCount: 300},
-        ],
-        newPostText: 'k'
-    },
-    dialogsPage: {
-        dialogs: [
-            {id: '1', name: 'Misha'},
-            {id: '2', name: 'Yura'},
-            {id: '3', name: 'Nastya'},
-            {id: '4', name: 'Ivan'},
-        ],
-        messages: [
-            {id: '1', message: 'Hi'},
-            {id: '2', message: 'How is your day?'},
-            {id: '3', message: 'Bue have a good day'},
-        ]
-    }
-}
-
-export const addPost = () => {
-    const newPost:postType = {
-        id: '3',
-        message: state.profilePage.newPostText,
-        likesCount: 0
-    }
-    state.profilePage.post.push(newPost);
-    state.profilePage.newPostText = ''
-    renderEntireTree(state)
+export type RootStoreType = {
 
 }
 
-export const updateNewPostText = (newText: string) => {
-    state.profilePage.newPostText = newText;
-    renderEntireTree(state)
-}
-
-export default state;
+export default store;
