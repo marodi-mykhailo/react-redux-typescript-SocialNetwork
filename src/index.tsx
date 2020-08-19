@@ -6,8 +6,8 @@ import React from "react";
 
 
 
-export const rerenderEntireTree = (state: any) => {
-    debugger
+export const rerenderEntireTree = () => {
+
     ReactDOM.render(
         <BrowserRouter>
             <App state={store.getState()}
@@ -17,7 +17,7 @@ export const rerenderEntireTree = (state: any) => {
         document.getElementById('root')
     );
 }
-rerenderEntireTree(store.getState())
+rerenderEntireTree()
 store.subscribe(rerenderEntireTree)
 
 // If you want your app to work offline and load faster, you can change
