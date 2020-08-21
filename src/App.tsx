@@ -15,7 +15,7 @@ type AppPropsType = {
 }
 
 function App(props: AppPropsType) {
-debugger
+    debugger
     return (
 
         <BrowserRouter>
@@ -26,6 +26,7 @@ debugger
                     <Route path='/dialogs'
                            render={() => <Dialogs
                                dialogPage={props.state.dialogsPage}
+                               dispatch={props.dispatch}
                            />
                            }/>
                     <Route path='/profile'
