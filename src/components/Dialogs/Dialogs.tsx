@@ -5,7 +5,6 @@ import Message from "./DialogItem/Message/Message";
 import {
     ActionsTypes,
     dialogsPageType,
-    RootStateType,
     sendMessageCreator,
     updateNewMessageBodyCreator
 } from "../../redux/state";
@@ -43,8 +42,8 @@ const Dialogs = (props: DialogsPropsType) => {
                 {messagesElements}
                 <div>
                     <div><textarea value={newMessageBody}
-                                   onChange={onNewMessageChange}
-                                   placeholder={'Entet message'}></textarea></div>
+    onChange={onNewMessageChange}
+    placeholder={'Entet message'}/></div>
                     <div>
                         <button onClick={onSendMessageClick}>Send</button>
                     </div>

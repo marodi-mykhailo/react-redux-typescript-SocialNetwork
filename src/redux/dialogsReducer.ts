@@ -1,5 +1,3 @@
-import {postType} from "./state";
-
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BOX'
 const SEND_MESSAGE = 'SEND-MESSAGE'
 

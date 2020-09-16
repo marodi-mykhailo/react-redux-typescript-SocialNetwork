@@ -11,7 +11,7 @@ const Post = (props: PostPropsType) => {
         <div>
             <div>
                 <div className={styles.item}>
-                    <img className={styles.profileImg}  src={'https://www.bemanistyle.com/wp-content/uploads/2018/01/Linux-Avatar-300px.png'}/>
+                    <img className={styles.profileImg}  src={'https://www.bemanistyle.com/wp-content/uploads/2018/01/Linux-Avatar-300px.png'} alt={''}/>
                     <p>{props.message}</p>
                     <span>{props.likesCount} likes</span>
                 </div>
