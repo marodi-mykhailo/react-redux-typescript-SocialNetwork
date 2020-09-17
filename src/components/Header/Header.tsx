@@ -2,9 +2,9 @@ import React from "react";
 import styles from './Header.module.css';
 
 const Head = () => {
-    return(
+    return (
         <header className={styles.header}>
-            hello
+            <div><h1>hello</h1></div>
         </header>
     )
 }

@@ -5,24 +5,21 @@ import React from "react";
 import store, {ReduxStoreType} from "./redux/redux-store";
 
 
-
 export const rerenderEntireTree = (state: ReduxStoreType) => {
 
     ReactDOM.render(
         <BrowserRouter>
-            <App state={state}
-                 dispatch={store.dispatch.bind(store)}
-            />
+            <App store={store} />
         </BrowserRouter>,
         document.getElementById('root')
     );
+
 }
 rerenderEntireTree(store.getState());
-store.subscribe(()=>{
+store.subscribe(() => {
     let state = store.getState();
     rerenderEntireTree(state);
 })
-
 
 
 // If you want your app to work offline and load faster, you can change

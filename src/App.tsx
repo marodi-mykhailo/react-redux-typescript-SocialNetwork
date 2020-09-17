@@ -5,15 +5,12 @@ import NavBar from "./components/NavBar/NavBar";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {Route} from 'react-router-dom';
-import {ActionsTypes} from "./redux/store";
 import {ReduxStoreType} from "./redux/redux-store";
-
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 
 type AppPropsType = {
-    state: ReduxStoreType
-    dispatch: (action: ActionsTypes) => void
-
+    store: any
 }
 
 function App(props: AppPropsType) {
@@ -25,16 +22,14 @@ function App(props: AppPropsType) {
                 <NavBar/>
                 <div className={styles.appWrapperContent}>
                     <Route path='/dialogs'
-                           render={() => <Dialogs
-                               dialogPage={props.state.dialogsReducer}
-                               dispatch={props.dispatch}
+                           render={() => <DialogsContainer
+                               store={props.store}
                            />
                            }/>
                     <Route path='/profile'
                            component={() =>
                                <Profile
-                                   profilePage={props.state.profileReducer}
-                                   dispatch={props.dispatch}/>
+                                   store={props.store}/>
                            }/>
                 </div>
             </div>

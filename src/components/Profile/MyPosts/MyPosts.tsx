@@ -1,29 +1,25 @@
 import React, {ChangeEvent} from "react";
 import styles from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import {ActionsTypes, addPostActionCreator, postType, updateNewPostTextActionCreator} from "../../../redux/store";
 
 type myPostsPropsType = {
-    post: Array<postType>
-    newPostText: string
-    dispatch: (action: ActionsTypes) => void
+    postData: any
+    postChange: (text:string) => void
+    addPost: () => void
 }
 
 
 const MyPosts = (props: myPostsPropsType) => {
-
-    let newPostText = props.newPostText;
-
     const postsElements =
-        props.post.map(post => <Post message={post.message} likesCount={post.likesCount}/>)
+        props.postData.post.map((post: { message: string; likesCount: number; }) => <Post message={post.message} likesCount={post.likesCount}/>)
 
     const addPost = () => {
-        props.dispatch(addPostActionCreator());
+       props.addPost();
     }
 
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(updateNewPostTextActionCreator(e.currentTarget.value))
+       props.postChange(e.currentTarget.value)
 
     }
 
@@ -32,7 +28,7 @@ const MyPosts = (props: myPostsPropsType) => {
             <h3>My Post</h3>
             <div>
                 <div>
-                    <textarea value={newPostText} onChange={onPostChange} placeholder={'Write Post'}/>
+                    <textarea value={props.postData.newPostText} onChange={onPostChange} placeholder={'Write Post'}/>
                 </div>
                 <button onClick={addPost}>Add post</button>
                 <button>Remove</button>
