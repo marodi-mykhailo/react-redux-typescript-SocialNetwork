@@ -7,7 +7,7 @@ import {
     dialogsPageType,
     sendMessageCreator,
     updateNewMessageBodyCreator
-} from "../../redux/state";
+} from "../../redux/store";
 
 type DialogsPropsType = {
     dialogPage: dialogsPageType

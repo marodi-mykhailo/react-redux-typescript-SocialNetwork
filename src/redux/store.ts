@@ -60,7 +60,7 @@ let store: StoreType = {
                 {id: '1', message: 'Hi, how are you?', likesCount: 5},
                 {id: '2', message: 'I love React.js', likesCount: 300},
             ],
-            newPostText: 'k'
+            newPostText: '',
         },
         dialogsPage: {
             dialogs: [
