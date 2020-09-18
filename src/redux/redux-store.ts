@@ -4,15 +4,12 @@ import dialogsReducer, {InitialDialogState} from "./dialogsReducer";
 
 
 let reducers = combineReducers({
-    profileReducer: profileReducer,
-    dialogsReducer: dialogsReducer,
+    profilePage: profileReducer,
+    dialogsPage: dialogsReducer,
 })
 
-export type ReduxStoreType = {
-    profileReducer: InitialProfileState,
-    dialogsReducer: InitialDialogState
-}
 
 let store = createStore(reducers);
+export type AppStateType = ReturnType<typeof reducers>
 
 export default store;

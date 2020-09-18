@@ -12,7 +12,6 @@ type DialogsPropsType = {
 
 
 const Dialogs = (props: DialogsPropsType) => {
-debugger
     let dialogsElements = props.dialogsData.dialogs.map((dialog: { name: string; id: string; }) => <DialogItem name={dialog.name} id={dialog.id}/>)
     let messagesElements = props.dialogsData.messages.map((message: { message: string; }) => <Message message={message.message}/>)
     let newMessageBody = props.dialogsData.newMessageBody
