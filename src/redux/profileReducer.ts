@@ -1,6 +1,3 @@
-import {postType} from "./store";
-
-
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
 
@@ -8,6 +5,17 @@ export type InitialProfileState = {
     post: Array<postType>
     newPostText: string
 }
+
+export type postType = {
+    id: string
+    message: string
+    likesCount: number
+}
+
+export type ActionsProfileTypes =
+    ReturnType<typeof addPostActionCreator>
+    | ReturnType<typeof updateNewPostTextActionCreator>
+
 
 let initialState: InitialProfileState = {
     post: [
@@ -19,20 +27,25 @@ let initialState: InitialProfileState = {
 
 const profileReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case ADD_POST:
+        case ADD_POST: {
             const newPost: postType = {
                 id: '3',
                 message: state.newPostText,
                 likesCount: 0
             }
-            state.post.push(newPost);
-            state.newPostText = ''
-            return state
+            return {
+                ...state,
+                post: [...state.post, newPost],
+                newPostText: ''
+            }
+        }
         case UPDATE_POST_TEXT:
-            state.newPostText = action.newText;
-            return state
+            return {
+                ...state,
+                newPostText: action.newText
+            }
         default:
-            return state
+            return {...state}
     }
 
 }

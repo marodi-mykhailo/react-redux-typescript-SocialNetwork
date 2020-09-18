@@ -1,26 +1,33 @@
 import React, {ChangeEvent} from "react";
 import styles from "./MyPosts.module.css";
 import Post from "./Post/Post";
+import {postType} from "../../../redux/profileReducer";
 
 type myPostsPropsType = {
     postData: any
-    onPostChange: (text:string) => void
+    onPostChange: (text: string) => void
     onAddPost: () => void
 }
 
 
 const MyPosts = (props: myPostsPropsType) => {
-    const postsElements =
-        props.postData.post.map((post: { message: string; likesCount: number; }) => <Post message={post.message} likesCount={post.likesCount}/>)
+
+    let newPostText = props.postData.newPostText
+
+    const postsElements = props.postData.post.map(
+        (post: postType, index: string) => (
+            <Post key={index} message={post.message} likesCount={post.likesCount}/>
+        )
+    )
 
     const addPost = () => {
-       props.onAddPost();
+        props.onAddPost();
     }
 
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-       props.onPostChange(e.currentTarget.value)
-
+        let body = e.currentTarget.value
+        props.onPostChange(body)
     }
 
     return (
@@ -28,7 +35,9 @@ const MyPosts = (props: myPostsPropsType) => {
             <h3>My Post</h3>
             <div>
                 <div>
-                    <textarea value={props.postData.newPostText} onChange={onPostChange} placeholder={'Write Post'}/>
+                    <textarea value={newPostText}
+                              onChange={onPostChange}
+                              placeholder={'Write Post'}/>
                 </div>
                 <button onClick={addPost}>Add post</button>
                 <button>Remove</button>

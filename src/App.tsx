@@ -23,7 +23,7 @@ function App(props: AppPropsType) {
                                <DialogsContainer />
                            }/>
                     <Route path='/profile'
-                           component={() =>
+                           render={() =>
                                <Profile />
                            }/>
                 </div>
