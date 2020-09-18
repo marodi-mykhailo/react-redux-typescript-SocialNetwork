@@ -6,8 +6,8 @@ import Message from "./DialogItem/Message/Message";
 
 type DialogsPropsType = {
     dialogsData: any
-    sendMessageClick: () => void
-    newMessageChange: (text: string) => void
+    onSendMessageClick: () => void
+    onNewMessageChange: (text: string) => void
 }
 
 
@@ -18,12 +18,12 @@ const Dialogs = (props: DialogsPropsType) => {
 
 
     let onSendMessageClick = () => {
-        props.sendMessageClick();
+        props.onSendMessageClick();
     }
 
     let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.target.value;
-        props.newMessageChange(body);
+        props.onNewMessageChange(body);
     }
     return (
         <div className={style.dialogs}>
@@ -35,7 +35,7 @@ const Dialogs = (props: DialogsPropsType) => {
                 <div>
                     <div><textarea value={newMessageBody}
                                    onChange={onNewMessageChange}
-                                   placeholder={'Entet message'}/></div>
+                                   placeholder={'Enter message'}/></div>
                     <div>
                         <button onClick={onSendMessageClick}>Send</button>
                     </div>

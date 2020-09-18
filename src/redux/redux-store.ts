@@ -1,6 +1,6 @@
 import {combineReducers, createStore} from "redux";
-import profileReducer, {InitialProfileState} from "./profileReducer";
-import dialogsReducer, {InitialDialogState} from "./dialogsReducer";
+import profileReducer from "./profileReducer";
+import dialogsReducer from "./dialogsReducer";
 
 
 let reducers = combineReducers({

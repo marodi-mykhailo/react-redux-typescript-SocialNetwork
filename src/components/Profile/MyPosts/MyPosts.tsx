@@ -4,8 +4,8 @@ import Post from "./Post/Post";
 
 type myPostsPropsType = {
     postData: any
-    postChange: (text:string) => void
-    addPost: () => void
+    onPostChange: (text:string) => void
+    onAddPost: () => void
 }
 
 
@@ -14,12 +14,12 @@ const MyPosts = (props: myPostsPropsType) => {
         props.postData.post.map((post: { message: string; likesCount: number; }) => <Post message={post.message} likesCount={post.likesCount}/>)
 
     const addPost = () => {
-       props.addPost();
+       props.onAddPost();
     }
 
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-       props.postChange(e.currentTarget.value)
+       props.onPostChange(e.currentTarget.value)
 
     }
 
