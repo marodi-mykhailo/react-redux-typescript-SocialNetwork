@@ -1,16 +1,22 @@
 import React from "react";
-import {initialUsersStateType, usersType} from "../../redux/usersReducer";
-import {AppStateType} from "../../redux/redux-store";
+import {initialUsersStateType} from "../../redux/usersReducer";
+import axios from 'axios/index';
 
 
 type UsersPropsType = {
     userData: initialUsersStateType
     follow: (userId: number) => void
     unFollow: (userId: number) => void
+    setUsers: (usersData: any) => void
 }
 
 
 const Users = (props: UsersPropsType) => {
+if(props.userData.users.length === 0){
+    axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+        props.setUsers(response.data)
+    })
+}
     return (
         <div>
             <header>
@@ -21,9 +27,9 @@ const Users = (props: UsersPropsType) => {
                     return (
                         <div key={u.id}>
                             <div>
-                                <img src={u.photoUrl}/>
+                                <img src={u.photos.small}/>
                                 <div>
-                                    {u.isFollowed
+                                    {u.followed
                                         ? <button onClick={() => {
                                             props.unFollow(u.id)
                                         }}>Unfollow</button>
@@ -33,16 +39,16 @@ const Users = (props: UsersPropsType) => {
                                 </div>
                             </div>
                             <div>
-                                <h3>{`${u.name} ${u.surName}`}</h3>
-                                <p>{u.description}</p>
+                                <h3>{`${u.name}`}</h3>
+                                <p>{u.status}</p>
                             </div>
                             <div>
-                                <span>{u.location.country},</span>
-                                <span>{u.location.city}</span>
+
                             </div>
                         </div>
                     )
                 })}
+                <button onClick={()=>{}}>More Users</button>
             </div>
         </div>
 

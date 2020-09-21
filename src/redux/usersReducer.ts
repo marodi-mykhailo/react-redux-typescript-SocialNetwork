@@ -1,19 +1,24 @@
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW"
+const SET_USERS = "SET-USERS"
 
-export type locationType = {
-    country: string
-    city: string
+// export type locationType = {
+//     country: string
+//     city: string
+// }
+
+export type photosType = {
+    small:  string | undefined
+    large:  string | undefined
 }
 
 export type usersType = {
-    id: number,
     name: string
-    surName: string
-    photoUrl: string
-    isFollowed: boolean
-    description: string
-    location: locationType
+    id: number,
+    uniqueUrlName: string | null
+    photos: photosType
+    status: string | null
+    followed: boolean
 }
 
 export type initialUsersStateType = {
@@ -23,6 +28,7 @@ export type initialUsersStateType = {
 export type ActionsUsersTypes =
     ReturnType<typeof followAC>
     | ReturnType<typeof unFollowAC>
+    | ReturnType<typeof setUsersAC>
 
 const initialState: initialUsersStateType =
     {
@@ -30,39 +36,37 @@ const initialState: initialUsersStateType =
             {
                 id: 1,
                 name: 'Yura',
-                surName: 'Sczegliuk',
-                photoUrl: 'https://avatars0.githubusercontent.com/u/32770315?s=460&u=5085bc60e02c9b325b519194d493a3fb298b6e60&v=4',
-                isFollowed: true,
-                description: 'I love in Cs and music',
-                location: {
-                    country: 'Belarus',
-                    city: 'Minsk'
-                }
+                uniqueUrlName:"",
+                photos: {
+                    small: '',
+                    large: ''
+                },
+                followed: false,
+                status: 'I love in Cs and music',
             },
             {
                 id: 2,
                 name: 'Yura',
-                surName: 'Sczegliuk',
-                photoUrl: 'https://avatars0.githubusercontent.com/u/32770315?s=460&u=5085bc60e02c9b325b519194d493a3fb298b6e60&v=4',
-                isFollowed: true,
-                description: 'I love in Cs and music',
-                location: {
-                    country: 'Belarus',
-                    city: 'Minsk'
-                }
+                uniqueUrlName:"",
+                photos: {
+                    small: '',
+                    large: ''
+                },
+                followed: false,
+                status: 'I love in Cs and music',
             },
             {
                 id: 3,
                 name: 'Yura',
-                surName: 'Sczegliuk',
-                photoUrl: 'https://avatars0.githubusercontent.com/u/32770315?s=460&u=5085bc60e02c9b325b519194d493a3fb298b6e60&v=4',
-                isFollowed: true,
-                description: 'I love in Cs and music',
-                location: {
-                    country: 'Belarus',
-                    city: 'Minsk'
-                }
+                uniqueUrlName:"",
+                photos: {
+                    small: '',
+                    large: ''
+                },
+                followed: false,
+                status: 'I love in Cs and music',
             },
+
         ]
     }
 
@@ -72,10 +76,10 @@ const usersReducer = (state = initialState, action: any): initialUsersStateType 
             return {
                 ...state,
                 users: state.users.map(u => {
-                   if(u.id === action.userId){
-                       return {...u, isFollowed: true}
-                   }
-                   return u;
+                    if (u.id === action.userId) {
+                        return {...u, isFollowed: true}
+                    }
+                    return u;
                 })
             }
         }
@@ -83,11 +87,16 @@ const usersReducer = (state = initialState, action: any): initialUsersStateType 
             return {
                 ...state,
                 users: state.users.map(u => {
-                    if(u.id === action.userId){
+                    if (u.id === action.userId) {
                         return {...u, isFollowed: false}
                     }
                     return u;
                 })
+            }
+        case SET_USERS:
+            return {
+                ...state,
+                users: [...state.users, ...action.users]
             }
         default:
             return state
@@ -106,5 +115,10 @@ export const unFollowAC = (userId: number) => ({
     } as const
 )
 
+export const setUsersAC = (usersData: any) => ({
+        type: SET_USERS,
+        usersData
+    } as const
+)
 
 export default usersReducer;
