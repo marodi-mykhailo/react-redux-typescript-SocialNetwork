@@ -30,54 +30,18 @@ export type ActionsUsersTypes =
     | ReturnType<typeof unFollowAC>
     | ReturnType<typeof setUsersAC>
 
-const initialState: initialUsersStateType =
-    {
-        users: [
-            {
-                id: 1,
-                name: 'Yura',
-                uniqueUrlName:"",
-                photos: {
-                    small: '',
-                    large: ''
-                },
-                followed: false,
-                status: 'I love in Cs and music',
-            },
-            {
-                id: 2,
-                name: 'Yura',
-                uniqueUrlName:"",
-                photos: {
-                    small: '',
-                    large: ''
-                },
-                followed: false,
-                status: 'I love in Cs and music',
-            },
-            {
-                id: 3,
-                name: 'Yura',
-                uniqueUrlName:"",
-                photos: {
-                    small: '',
-                    large: ''
-                },
-                followed: false,
-                status: 'I love in Cs and music',
-            },
+let initialState: initialUsersStateType = {
+    users: []
+};
 
-        ]
-    }
-
-const usersReducer = (state = initialState, action: any): initialUsersStateType => {
+const usersReducer = (state:initialUsersStateType = initialState, action: ActionsUsersTypes): initialUsersStateType => {
     switch (action.type) {
         case FOLLOW: {
             return {
                 ...state,
                 users: state.users.map(u => {
                     if (u.id === action.userId) {
-                        return {...u, isFollowed: true}
+                        return {...u, followed: true}
                     }
                     return u;
                 })
@@ -88,7 +52,7 @@ const usersReducer = (state = initialState, action: any): initialUsersStateType 
                 ...state,
                 users: state.users.map(u => {
                     if (u.id === action.userId) {
-                        return {...u, isFollowed: false}
+                        return {...u, followed: false}
                     }
                     return u;
                 })
@@ -96,7 +60,7 @@ const usersReducer = (state = initialState, action: any): initialUsersStateType 
         case SET_USERS:
             return {
                 ...state,
-                users: [...state.users, ...action.users]
+                users: [...state.users, ...action.usersData.items]
             }
         default:
             return state
