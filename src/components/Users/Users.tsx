@@ -1,37 +1,55 @@
 import React from "react";
 import styles from "./Users.module.css";
 import axios from "axios";
-import {initialUsersStateType} from "../../redux/usersReducer";
+import {usersType} from "../../redux/usersReducer";
 
 type UsersPropsType = {
-    userData: initialUsersStateType
+    users: Array<usersType>
+    currentPage: number
+    pageSize: number
+    totalUsersCount: number
     follow: (userId: number) => void
     unFollow: (userId: number) => void
     setUsers: (usersData: any) => void
+    setTotalUsersCount: (totalUserCount: number) => void
+    setCurrentPage: (currentPage: number) => void
 }
+
 
 class Users extends React.Component<UsersPropsType> {
 
     componentDidMount() {
-        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
             this.props.setUsers(response.data)
+            this.props.setTotalUsersCount(response.data.totalCount)
         })
     }
 
-    getUsers = () =>{
-        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+    onPageChange = (currentPage: number) => {
+        this.props.setCurrentPage(currentPage)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`).then(response => {
             this.props.setUsers(response.data)
         })
     }
 
     render() {
+        let pageCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
+        let pageCountArr = [];
+        for (let i = 1; i <= pageCount; i++) {
+            pageCountArr.push(i)
+        }
         return (
             <div className={styles.wrapper}>
                 <header>
                     <h1>Users</h1>
                 </header>
+                {pageCountArr.map(i => <span key={i}
+                                             className={(this.props.currentPage === i) ? `${styles.active} + ${styles.pageCount}` : styles.pageCount}
+                                             onClick={() => {
+                                                 this.onPageChange(i)
+                                             }}>{i}</span>)}
                 <div>
-                    {this.props.userData.users.map(u => {
+                    {this.props.users.map(u => {
                         return (
                             <div key={u.id}>
                                 <div>
@@ -58,7 +76,6 @@ class Users extends React.Component<UsersPropsType> {
                         )
                     })}
                 </div>
-                <button onClick={this.getUsers}>More Users</button>
             </div>
 
         )
