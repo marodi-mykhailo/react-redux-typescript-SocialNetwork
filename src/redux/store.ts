@@ -80,7 +80,7 @@ console.log('hello')
 //         this._callSubscriber(this._state)
 //
 //         if (action.type === ADD_POST) {
-//             const newPost: postType = {
+//             const newPost: PostType = {
 //                 id: '3',
 //                 message: this._state.profilePage.newPostText,
 //                 likesCount: 0

@@ -3,14 +3,14 @@ const UNFOLLOW = "UNFOLLOW"
 const SET_USERS = "SET-USERS"
 const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT"
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE"
-const SET_IS_FETCHING = "SET_IS_FETCHING"
+const SET_USER_IS_FETCHING = "SET_USER_IS_FETCHING"
 
 // export type locationType = {
 //     country: string
 //     city: string
 // }
 
-export type photosType = {
+export type PhotosType = {
     small: string | undefined
     large: string | undefined
 }
@@ -19,7 +19,7 @@ export type usersType = {
     name: string
     id: number,
     uniqueUrlName: string | null
-    photos: photosType
+    photos: PhotosType
     status: string | null
     followed: boolean
 }
@@ -86,7 +86,7 @@ const usersReducer = (state: initialUsersStateType = initialState, action: Actio
                 ...state,
                 currentPage: action.currentPage
             }
-        case "SET_IS_FETCHING":
+        case "SET_USER_IS_FETCHING":
             return {
                 ...state,
                 isFetching: action.isFetching
@@ -127,7 +127,7 @@ export const setCurrentPage = (currentPage: number) => ({
 )
 
 export const setIsFetching = (isFetching: boolean) => ({
-        type: SET_IS_FETCHING,
+        type: SET_USER_IS_FETCHING,
         isFetching
     } as const
 )

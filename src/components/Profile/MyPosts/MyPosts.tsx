@@ -1,12 +1,12 @@
 import React, {ChangeEvent} from "react";
 import styles from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import {postType} from "../../../redux/profileReducer";
+import {PostType} from "../../../redux/profileReducer";
 
 type myPostsPropsType = {
     postData: any
-    onPostChange: (text: string) => void
-    onAddPost: () => void
+    updateNewPostText: (text: string) => void
+    addPost: () => void
 }
 
 
@@ -15,19 +15,19 @@ const MyPosts = (props: myPostsPropsType) => {
     let newPostText = props.postData.newPostText
 
     const postsElements = props.postData.post.map(
-        (post: postType, index: string) => (
+        (post: PostType, index: string) => (
             <Post key={index} message={post.message} likesCount={post.likesCount}/>
         )
     )
 
     const addPost = () => {
-        props.onAddPost();
+        props.addPost();
     }
 
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.currentTarget.value
-        props.onPostChange(body)
+        props.updateNewPostText(body)
     }
 
     return (

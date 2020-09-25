@@ -26,7 +26,7 @@ type UsersContainerType = {
     setTotalUsersCount: (totalUserCount: number) => void
     setCurrentPage: (currentPage: number) => void
     isFetching: boolean
-    setIsFetching: (isFethcing: boolean) => void
+    setIsFetching: (isFetching: boolean) => void
 }
 
 class UsersContainer extends React.Component<UsersContainerType> {
@@ -52,9 +52,9 @@ class UsersContainer extends React.Component<UsersContainerType> {
 
         return (
             <>
-                <Preloader isFetching={this.props.isFetching}/>
-                {!this.props.isFetching &&
-                <Users users={this.props.users}
+                {this.props.isFetching
+                    ? <Preloader/>
+                    : <Users users={this.props.users}
                        totalUsersCount={this.props.totalUsersCount}
                        pageSize={this.props.pageSize}
                        currentPage={this.props.currentPage}
