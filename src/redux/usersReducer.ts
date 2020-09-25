@@ -3,6 +3,7 @@ const UNFOLLOW = "UNFOLLOW"
 const SET_USERS = "SET-USERS"
 const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT"
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE"
+const SET_IS_FETCHING = "SET_IS_FETCHING"
 
 // export type locationType = {
 //     country: string
@@ -28,6 +29,7 @@ export type initialUsersStateType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
 }
 
 export type ActionsUsersTypes =
@@ -36,12 +38,14 @@ export type ActionsUsersTypes =
     | ReturnType<typeof setUsersAC>
     | ReturnType<typeof setTotalUsersCountAC>
     | ReturnType<typeof setCurrentPageAC>
+    | ReturnType<typeof setIsFetchingAC>
 
 let initialState: initialUsersStateType = {
     users: [],
     pageSize: 100,
     totalUsersCount: 0,
-    currentPage: 1
+    currentPage: 1,
+    isFetching: true
 };
 
 const usersReducer = (state: initialUsersStateType = initialState, action: ActionsUsersTypes): initialUsersStateType => {
@@ -82,6 +86,11 @@ const usersReducer = (state: initialUsersStateType = initialState, action: Actio
                 ...state,
                 currentPage: action.currentPage
             }
+        case "SET_IS_FETCHING":
+            return {
+                ...state,
+                isFetching: action.isFetching
+            }
         default:
             return state
     }
@@ -112,8 +121,15 @@ export const setTotalUsersCountAC = (totalUserCount: number) => ({
 )
 
 export const setCurrentPageAC = (currentPage: number) => ({
-    type:SET_CURRENT_PAGE,
-    currentPage
-} as const)
+        type: SET_CURRENT_PAGE,
+        currentPage
+    } as const
+)
+
+export const setIsFetchingAC = (isFetching: boolean) => ({
+        type: SET_IS_FETCHING,
+        isFetching
+    } as const
+)
 
 export default usersReducer;
