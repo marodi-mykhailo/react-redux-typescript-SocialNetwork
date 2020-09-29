@@ -39,7 +39,6 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
             this.props.setProfile(response.data)
             this.props.setProfileIsFetching(false)
         })
-        debugger
     }
 
     render() {

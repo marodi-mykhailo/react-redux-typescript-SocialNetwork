@@ -35,7 +35,7 @@ let initialState: InitialDialogState = {
     newMessageBody: ""
 }
 
-const dialogsReducer = (state = initialState, action: any) => {
+const dialogsReducer = (state = initialState, action: ActionsDialogsTypes) => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY:
             return {...state, newMessageBody: action.body}

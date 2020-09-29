@@ -1,8 +1,21 @@
 .header {
     grid-area: h;
     background-color: green;
-}
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
+}
+.header h1{
+    margin: 0;
+    display: inline-block;
+}
+.auth {
+    float: right;
+    color: white;
+    background: red;
+    cursor: pointer;
+}
 
 
 

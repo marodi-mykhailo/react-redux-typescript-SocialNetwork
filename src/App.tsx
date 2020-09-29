@@ -1,12 +1,14 @@
 import React from 'react';
 import styles from './App.module.css'
-import Head from "./components/Header/Header";
+import Header from "./components/Header/Header";
 import NavBar from "./components/NavBar/NavBar";
 import Profile from "./components/Profile/Profile";
 import {Route} from 'react-router-dom';
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
+import HeaderContaine from "./components/Header/HeaderContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
 
 type AppPropsType = {}
 
@@ -15,7 +17,7 @@ function App(props: AppPropsType) {
 
         <div>
             <div className={styles.appWrapper}>
-                <Head/>
+                <HeaderContainer/>
                 <NavBar/>
                 <div className={styles.appWrapperContent}>
                     <Route path='/dialogs'
