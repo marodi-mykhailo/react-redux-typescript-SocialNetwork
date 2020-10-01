@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import {
-    ActionsUsersTypes,
     follow,
     setCurrentPage,
     setIsFetching,
@@ -12,8 +11,8 @@ import {
 } from "../../redux/usersReducer";
 import {AppStateType} from "../../redux/redux-store";
 import Users from "./Users";
-import axios from "axios";
 import Preloader from "../../common/Preloader";
+import {usersApi} from "../../redux/api";
 
 type UsersContainerType = {
     users: Array<usersType>
@@ -32,7 +31,7 @@ type UsersContainerType = {
 class UsersContainer extends React.Component<UsersContainerType> {
     componentDidMount() {
         this.props.setIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
+       usersApi.getUsers(this.props.currentPage, this.props.pageSize).then(response => {
             this.props.setUsers(response.data)
             this.props.setTotalUsersCount(response.data.totalCount)
             this.props.setIsFetching(false)
@@ -42,10 +41,28 @@ class UsersContainer extends React.Component<UsersContainerType> {
     onPageChange = (currentPage: number) => {
         this.props.setCurrentPage(currentPage)
         this.props.setIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`).then(response => {
+        usersApi.getUsers(currentPage, this.props.pageSize).then(response => {
             this.props.setUsers(response.data)
             this.props.setIsFetching(false)
         })
+    }
+
+    onFollow = (userId: number) => {
+       usersApi.onFollow(userId)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    this.props.follow(userId)
+                }
+            })
+    }
+
+    onUnFollow = (userId: number) => {
+        usersApi.onUnFollow(userId)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    this.props.unFollow(userId)
+                }
+            })
     }
 
     render() {
@@ -55,13 +72,13 @@ class UsersContainer extends React.Component<UsersContainerType> {
                 {this.props.isFetching
                     ? <Preloader/>
                     : <Users users={this.props.users}
-                       totalUsersCount={this.props.totalUsersCount}
-                       pageSize={this.props.pageSize}
-                       currentPage={this.props.currentPage}
-                       unFollow={this.props.unFollow}
-                       follow={this.props.follow}
-                       onPageChange={this.onPageChange}
-                />
+                             totalUsersCount={this.props.totalUsersCount}
+                             pageSize={this.props.pageSize}
+                             currentPage={this.props.currentPage}
+                             follow={this.onFollow}
+                             unFollow={this.onUnFollow}
+                             onPageChange={this.onPageChange}
+                    />
                 }
             </>
         )
