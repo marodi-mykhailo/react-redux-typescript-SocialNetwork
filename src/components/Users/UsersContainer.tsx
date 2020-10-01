@@ -5,7 +5,7 @@ import {
     setCurrentPage,
     setIsFetching,
     setTotalUsersCount,
-    setUsers,
+    setUsers, toggleFollowingProgress,
     unFollow,
     usersType
 } from "../../redux/usersReducer";
@@ -26,12 +26,14 @@ type UsersContainerType = {
     setCurrentPage: (currentPage: number) => void
     isFetching: boolean
     setIsFetching: (isFetching: boolean) => void
+    followingInProgress: Array<any>
+    toggleFollowingProgress: (isFetching: boolean, userId: number) => void
 }
 
 class UsersContainer extends React.Component<UsersContainerType> {
     componentDidMount() {
         this.props.setIsFetching(true)
-       usersApi.getUsers(this.props.currentPage, this.props.pageSize).then(response => {
+        usersApi.getUsers(this.props.currentPage, this.props.pageSize).then(response => {
             this.props.setUsers(response.data)
             this.props.setTotalUsersCount(response.data.totalCount)
             this.props.setIsFetching(false)
@@ -48,20 +50,24 @@ class UsersContainer extends React.Component<UsersContainerType> {
     }
 
     onFollow = (userId: number) => {
-       usersApi.onFollow(userId)
+        this.props.toggleFollowingProgress(true, userId)
+        usersApi.onFollow(userId)
             .then(response => {
                 if (response.data.resultCode === 0) {
                     this.props.follow(userId)
                 }
+                this.props.toggleFollowingProgress(false, userId)
             })
     }
 
     onUnFollow = (userId: number) => {
+        this.props.toggleFollowingProgress(true, userId)
         usersApi.onUnFollow(userId)
             .then(response => {
                 if (response.data.resultCode === 0) {
                     this.props.unFollow(userId)
                 }
+                this.props.toggleFollowingProgress(false, userId)
             })
     }
 
@@ -78,6 +84,7 @@ class UsersContainer extends React.Component<UsersContainerType> {
                              follow={this.onFollow}
                              unFollow={this.onUnFollow}
                              onPageChange={this.onPageChange}
+                             followingInProgress={this.props.followingInProgress}
                     />
                 }
             </>
@@ -91,7 +98,8 @@ const mapStateToProps = (state: AppStateType) => {
         currentPage: state.usersPage.currentPage,
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
@@ -102,4 +110,5 @@ export default connect(mapStateToProps, {
     setTotalUsersCount,
     setCurrentPage,
     setIsFetching,
+    toggleFollowingProgress
 })(UsersContainer)

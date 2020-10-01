@@ -4,6 +4,7 @@ const SET_USERS = "SET-USERS"
 const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT"
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE"
 const SET_USER_IS_FETCHING = "SET_USER_IS_FETCHING"
+const TOGGLE_IS_FOLLOWING_PROGRESS = "TOGGLE_IS_FOLLOWING_PROGRESS"
 
 // export type locationType = {
 //     country: string
@@ -30,7 +31,17 @@ export type initialUsersStateType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: Array<any>
 }
+
+let initialState: initialUsersStateType = {
+    users: [],
+    pageSize: 100,
+    totalUsersCount: 0,
+    currentPage: 1,
+    isFetching: true,
+    followingInProgress: []
+};
 
 export type ActionsUsersTypes =
     ReturnType<typeof follow>
@@ -39,14 +50,8 @@ export type ActionsUsersTypes =
     | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setIsFetching>
+    | ReturnType<typeof toggleFollowingProgress>
 
-let initialState: initialUsersStateType = {
-    users: [],
-    pageSize: 100,
-    totalUsersCount: 0,
-    currentPage: 1,
-    isFetching: true
-};
 
 const usersReducer = (state: initialUsersStateType = initialState, action: ActionsUsersTypes): initialUsersStateType => {
     switch (action.type) {
@@ -91,6 +96,12 @@ const usersReducer = (state: initialUsersStateType = initialState, action: Actio
                 ...state,
                 isFetching: action.isFetching
             }
+        case "TOGGLE_IS_FOLLOWING_PROGRESS":
+            return {
+                ...state, followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id !== action.userId)
+            }
         default:
             return state
     }
@@ -129,6 +140,13 @@ export const setCurrentPage = (currentPage: number) => ({
 export const setIsFetching = (isFetching: boolean) => ({
         type: SET_USER_IS_FETCHING,
         isFetching
+    } as const
+)
+
+export const toggleFollowingProgress = (isFetching: boolean, userId: number) => ({
+        type: TOGGLE_IS_FOLLOWING_PROGRESS,
+        isFetching,
+        userId
     } as const
 )
 

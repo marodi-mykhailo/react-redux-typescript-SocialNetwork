@@ -1,18 +1,17 @@
 import React from "react";
 import Header from "./Header";
 import {connect} from "react-redux";
-import axios from 'axios'
 import {AppStateType} from "../../redux/redux-store";
 import {authInitialStateType, setUserData} from "../../redux/authReducer";
 import {headerAPI} from "../../redux/api";
 
-type headerContaineType = {
+type headerContainerType = {
     userLogin: string | null
     isAuth: boolean
     setUserData: (userData: authInitialStateType) => void
 }
 
-class HeaderContainer extends React.Component<headerContaineType> {
+class HeaderContainer extends React.Component<headerContainerType> {
     componentDidMount() {
         headerAPI.getUserData()
             .then(response => {
