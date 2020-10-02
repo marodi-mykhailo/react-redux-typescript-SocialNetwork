@@ -1,12 +1,9 @@
 import React from "react";
 import {connect} from "react-redux";
 import {
-    follow,
-    setCurrentPage,
-    setIsFetching,
-    setTotalUsersCount,
+    follow, followThunkAC, getUsers, setCurrentPage,
     setUsers, toggleFollowingProgress,
-    unFollow,
+    unFollow, unFollowThunkAC,
     usersType
 } from "../../redux/usersReducer";
 import {AppStateType} from "../../redux/redux-store";
@@ -21,54 +18,30 @@ type UsersContainerType = {
     totalUsersCount: number
     follow: (userId: number) => void
     unFollow: (userId: number) => void
-    setUsers: (usersData: any) => void
-    setTotalUsersCount: (totalUserCount: number) => void
     setCurrentPage: (currentPage: number) => void
     isFetching: boolean
-    setIsFetching: (isFetching: boolean) => void
     followingInProgress: Array<any>
     toggleFollowingProgress: (isFetching: boolean, userId: number) => void
+    getUsers: (currentPage: number, pageSize: number) => void
+    followThunkAC: (userId: number) => void
+    unFollowThunkAC: (userId: number) => void
 }
 
 class UsersContainer extends React.Component<UsersContainerType> {
     componentDidMount() {
-        this.props.setIsFetching(true)
-        usersApi.getUsers(this.props.currentPage, this.props.pageSize).then(response => {
-            this.props.setUsers(response.data)
-            this.props.setTotalUsersCount(response.data.totalCount)
-            this.props.setIsFetching(false)
-        })
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChange = (currentPage: number) => {
-        this.props.setCurrentPage(currentPage)
-        this.props.setIsFetching(true)
-        usersApi.getUsers(currentPage, this.props.pageSize).then(response => {
-            this.props.setUsers(response.data)
-            this.props.setIsFetching(false)
-        })
+        this.props.getUsers(currentPage, this.props.pageSize)
     }
 
     onFollow = (userId: number) => {
-        this.props.toggleFollowingProgress(true, userId)
-        usersApi.onFollow(userId)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    this.props.follow(userId)
-                }
-                this.props.toggleFollowingProgress(false, userId)
-            })
+        this.props.followThunkAC(userId)
     }
 
     onUnFollow = (userId: number) => {
-        this.props.toggleFollowingProgress(true, userId)
-        usersApi.onUnFollow(userId)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    this.props.unFollow(userId)
-                }
-                this.props.toggleFollowingProgress(false, userId)
-            })
+        this.props.unFollowThunkAC(userId)
     }
 
     render() {
@@ -107,8 +80,9 @@ export default connect(mapStateToProps, {
     follow,
     unFollow,
     setUsers,
-    setTotalUsersCount,
+    getUsers,
     setCurrentPage,
-    setIsFetching,
+    followThunkAC,
+    unFollowThunkAC,
     toggleFollowingProgress
 })(UsersContainer)

@@ -1,3 +1,5 @@
+import {usersApi} from "./api";
+
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW"
 const SET_USERS = "SET-USERS"
@@ -149,5 +151,44 @@ export const toggleFollowingProgress = (isFetching: boolean, userId: number) => 
         userId
     } as const
 )
+
+export const getUsers = (currentPage: number, pageSize: number) => {
+    return (dispatch: any) => {
+        dispatch(setIsFetching(true))
+        dispatch(setCurrentPage(currentPage));
+        usersApi.getUsers(currentPage, pageSize).then(response => {
+                dispatch(setUsers(response.data))
+                dispatch(setTotalUsersCount(response.data.totalCount))
+                dispatch(setIsFetching(false))
+            }
+        )
+    }
+}
+
+export const followThunkAC = (userId: number) => {
+    return (dispatch: any) => {
+        dispatch(toggleFollowingProgress(true, userId))
+        usersApi.onFollow(userId)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(follow(userId))
+                }
+                dispatch(toggleFollowingProgress(false, userId))
+            })
+    }
+}
+
+export const unFollowThunkAC = (userId: number) => {
+    return (dispatch: any) => {
+        dispatch(toggleFollowingProgress(true, userId))
+        usersApi.onUnFollow(userId)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(unFollow(userId))
+                }
+                dispatch(toggleFollowingProgress(false, userId))
+            })
+    }
+}
 
 export default usersReducer;

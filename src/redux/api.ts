@@ -15,17 +15,16 @@ export const usersApi = {
     },
     onUnFollow: (userId: number) => {
         return instance.delete(`follow/${userId}`)
+    },
+    getUserProfile: (userId:string ) => {
+        return instance.get(`profile/${userId}`)
     }
 }
 
-export const headerAPI = {
-    getUserData: () =>{
+export const authAPI = {
+    me() {
         return instance.get('auth/me')
     }
 }
 
-export const profileAPI = {
-    getUserProfile: (userId:string) => {
-        return instance.get(`profile/${userId}`)
-    }
-}
+
