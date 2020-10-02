@@ -1,4 +1,5 @@
 import {PhotosType} from "./usersReducer";
+import {usersApi} from "./api";
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
@@ -129,5 +130,15 @@ export const setProfileIsFetching = (isFetching: boolean) => ({
         isFetching
     } as const
 )
+
+export const getUserProfile = (userId: string) => {
+    return (dispatch: any) =>{
+        dispatch(setProfileIsFetching(true))
+        usersApi.getUserProfile(userId).then(response => {
+            dispatch(setProfile(response.data))
+            dispatch(setProfileIsFetching(false))
+        })
+    }
+}
 
 export default profileReducer;

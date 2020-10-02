@@ -1,3 +1,5 @@
+import {authAPI} from "./api";
+
 const SET_USER_DATA = "SET_USER_DATA"
 
 export type authInitialStateType = {
@@ -14,7 +16,7 @@ const authInitialState: authInitialStateType = {
     isAuth: false
 }
 
-type authActionType = ReturnType<typeof setUserData>
+type authActionType = ReturnType<typeof setLoggedUserData>
 
 
 const authReducer = (state = authInitialState, action: authActionType) => {
@@ -32,10 +34,21 @@ const authReducer = (state = authInitialState, action: authActionType) => {
 }
 
 
-export const setUserData = (userData: authInitialStateType) => ({
+export const setLoggedUserData = (userData: authInitialStateType) => ({
         type: SET_USER_DATA,
         userData
     } as const
 )
 
+export const getLoggedUserData = () => {
+    return (dispatch: any) =>{
+        authAPI.me()
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(setLoggedUserData(response.data.data))
+                }
+
+            })
+    }
+}
 export default authReducer;

@@ -2,10 +2,9 @@ import React from 'react';
 import {connect} from "react-redux";
 import Profile from "./Profile";
 import {AppStateType} from "../../redux/redux-store";
-import {ProfileInfoType, setProfile, setProfileIsFetching} from "../../redux/profileReducer";
+import {getUserProfile, ProfileInfoType, setProfile, setProfileIsFetching} from "../../redux/profileReducer";
 import Preloader from "../../common/Preloader";
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import {usersApi} from "../../redux/api";
 
 type ProfileContainerType = {
     setProfile: (profileInfo: any) => void
@@ -25,6 +24,7 @@ type MapStateToPropsType = {
 type MapDispatchToProps = {
     setProfile: (profileInfo: any) => void
     setProfileIsFetching: (isFetching: boolean) => void
+    getUserProfile: (userId: string) => void
 }
 
 type OwnPropsType = MapStateToPropsType & MapDispatchToProps
@@ -34,11 +34,7 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 
     componentDidMount() {
         let userId = this.props.match.params.userId
-        this.props.setProfileIsFetching(true)
-        usersApi.getUserProfile(userId).then(response => {
-            this.props.setProfile(response.data)
-            this.props.setProfileIsFetching(false)
-        })
+        this.props.getUserProfile(userId)
     }
 
     render() {
@@ -65,5 +61,5 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
 let WithUrlDataContainerComponent = withRouter(ProfileContainer)
 
-export default connect(mapStateToProps, {setProfile, setProfileIsFetching})(WithUrlDataContainerComponent)
+export default connect(mapStateToProps, {setProfile, setProfileIsFetching, getUserProfile})(WithUrlDataContainerComponent)
 
