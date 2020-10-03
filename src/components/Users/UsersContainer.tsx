@@ -10,6 +10,8 @@ import {AppStateType} from "../../redux/redux-store";
 import Users from "./Users";
 import Preloader from "../../common/Preloader";
 import {usersApi} from "../../redux/api";
+import {Redirect} from "react-router-dom";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 type UsersContainerType = {
     users: Array<usersType>
@@ -25,6 +27,7 @@ type UsersContainerType = {
     getUsers: (currentPage: number, pageSize: number) => void
     followThunkAC: (userId: number) => void
     unFollowThunkAC: (userId: number) => void
+    isAuth: boolean
 }
 
 class UsersContainer extends React.Component<UsersContainerType> {
@@ -45,7 +48,7 @@ class UsersContainer extends React.Component<UsersContainerType> {
     }
 
     render() {
-
+        if (!this.props.isAuth) return <Redirect to={'/login'}/>
         return (
             <>
                 {this.props.isFetching
@@ -65,6 +68,8 @@ class UsersContainer extends React.Component<UsersContainerType> {
     }
 }
 
+let AuthRedirectComponent = withAuthRedirect(UsersContainer)
+
 const mapStateToProps = (state: AppStateType) => {
     return {
         users: state.usersPage.users,
@@ -72,7 +77,7 @@ const mapStateToProps = (state: AppStateType) => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        followingInProgress: state.usersPage.followingInProgress,
     }
 }
 
@@ -85,4 +90,4 @@ export default connect(mapStateToProps, {
     followThunkAC,
     unFollowThunkAC,
     toggleFollowingProgress
-})(UsersContainer)
+})(AuthRedirectComponent)
