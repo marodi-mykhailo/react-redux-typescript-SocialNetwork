@@ -9,7 +9,6 @@ const NavBar = () => {
     let dispatch = useDispatch();
     let myId = useSelector<AppStateType, number|null>(state => state.auth.id)
     const onProfileClick = (myId:any) =>{
-        debugger
         if(myId === null){
            return <Redirect to={'/login'}/>
         }
