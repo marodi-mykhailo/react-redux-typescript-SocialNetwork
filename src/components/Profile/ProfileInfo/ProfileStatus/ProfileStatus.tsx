@@ -1,5 +1,4 @@
 import React, {ChangeEvent} from 'react';
-import {updateStatus} from "../../../../redux/profileReducer";
 
 type ProfileStatusPropsType = {
     status: string
@@ -23,17 +22,25 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType, any> {
         })
         this.props.updateStatus(this.state.status)
     }
-    onChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
+    onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         this.setState({
-            status: e.target.value
+            status: e.currentTarget.value
         })
     }
-    onKeyDownHandler = (e: any) =>{
-        if(e.keyCode === 13) {
+    onKeyDownHandler = (e: any) => {
+        if (e.keyCode === 13) {
             this.setState({
                 editMode: true
             })
             this.props.updateStatus(this.state.status)
+        }
+    }
+
+    componentDidUpdate(prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<any>) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
         }
     }
 
@@ -46,7 +53,9 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType, any> {
                         <span onDoubleClick={this.activeEditMode}>{this.props.status}</span>
                     </div>
                     : <div>
-                        <input onChange={(e)=> this.onChangeHandler(e)} value={this.state.status} onBlur={this.deactivateEditMode} onKeyDown={(e)=>this.onKeyDownHandler(e)} autoFocus={true}/>
+                        <input onChange={(e) => this.onChangeHandler(e)} value={this.state.status}
+                               onBlur={this.deactivateEditMode} onKeyDown={(e) => this.onKeyDownHandler(e)}
+                               autoFocus={true}/>
                     </div>
                 }
             </div>

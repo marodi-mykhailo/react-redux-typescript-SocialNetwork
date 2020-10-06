@@ -6,7 +6,7 @@ import {
     getProfile, getStatus,
     ProfileInfoType,
     setProfile,
-    setProfileIsFetching, updateStatus
+    setProfileIsFetching, setStatus, updateStatus
 } from "../../redux/profileReducer";
 import Preloader from "../../common/Preloader";
 import { withRouter, RouteComponentProps } from 'react-router-dom';
