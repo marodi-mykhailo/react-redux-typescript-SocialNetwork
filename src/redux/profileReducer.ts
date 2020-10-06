@@ -1,16 +1,18 @@
 import {PhotosType} from "./usersReducer";
-import {usersApi} from "./api";
+import {profileAPI, usersApi} from "./api";
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
 const SET_PROFILE = 'SET_PROFILE'
 const SET_PROFILE_IS_FETCHING = 'SET_PROFILE_IS_FETCHING'
+const SET_STATUS = 'SET_STATUS'
 
 export type InitialProfileState = {
     profileInfo: ProfileInfoType
     post: Array<PostType>
     newPostText: string
     isFetching: boolean
+    status: string
 }
 
 export type ContactType = {
@@ -40,6 +42,7 @@ export type PostType = {
     id: string
     message: string
     likesCount: number
+
 }
 
 export type ActionsProfileTypes =
@@ -51,7 +54,8 @@ export type ActionsProfileTypes =
 
 let initialState: InitialProfileState = {
     profileInfo: {
-        userId: 1, lookingForAJob: true, lookingForAJobDescription: "yes im looking",
+        userId: 1, lookingForAJob: true,
+        lookingForAJobDescription: "yes im looking",
         fullName: "MISHA MARODI", contacts: {
             github: "gitHub",
             vk: 'vk',
@@ -68,6 +72,7 @@ let initialState: InitialProfileState = {
             small: 'small'
         }
     },
+    status: 'Its test status',
     post: [
         {id: '1', message: 'Hi, how are you?', likesCount: 5},
         {id: '2', message: 'I love React.js', likesCount: 300},
@@ -105,6 +110,11 @@ const profileReducer = (state = initialState, action: any): InitialProfileState 
                 ...state,
                 isFetching: action.isFetching
             }
+        case SET_STATUS:
+            return {
+                ...state,
+                status: action.status
+            }
         default:
             return state
     }
@@ -131,14 +141,40 @@ export const setProfileIsFetching = (isFetching: boolean) => ({
     } as const
 )
 
-export const getUserProfile = (userId: string) => {
-    return (dispatch: any) =>{
+export const setStatus = (status: string) => ({
+        type: SET_STATUS,
+        status
+    } as const
+)
+
+export const getProfile = (userId: string) => {
+    return (dispatch: any) => {
         dispatch(setProfileIsFetching(true))
-        usersApi.getUserProfile(userId).then(response => {
+        profileAPI.getProfile(userId).then(response => {
             dispatch(setProfile(response.data))
             dispatch(setProfileIsFetching(false))
         })
     }
 }
+
+export const getStatus = (userId: number) => {
+    return (dispatch: any) => {
+        profileAPI.getStatus(userId).then(response => {
+            dispatch(setStatus(response.data))
+        })
+    }
+}
+
+export const updateStatus = (status: string) => {
+    return(dispatch: any) => {
+        profileAPI.updateStatus(status).then(response =>{
+            if(response.data.resultCode===0){
+                dispatch(setStatus(status))
+            }
+        })
+    }
+}
+
+
 
 export default profileReducer;

@@ -2,7 +2,12 @@ import React from 'react';
 import {connect} from "react-redux";
 import Profile from "./Profile";
 import {AppStateType} from "../../redux/redux-store";
-import {getUserProfile, ProfileInfoType, setProfile, setProfileIsFetching} from "../../redux/profileReducer";
+import {
+    getProfile, getStatus,
+    ProfileInfoType,
+    setProfile,
+    setProfileIsFetching, updateStatus
+} from "../../redux/profileReducer";
 import Preloader from "../../common/Preloader";
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
@@ -21,12 +26,16 @@ type PathParamType = {
 type MapStateToPropsType = {
     profileInfo: ProfileInfoType
     isFetching:boolean
+    status: string
+    myId: number | null
 }
 
 type MapDispatchToProps = {
     setProfile: (profileInfo: any) => void
     setProfileIsFetching: (isFetching: boolean) => void
-    getUserProfile: (userId: string) => void
+    getProfile: (userId: string) => void
+    getStatus: (status: string) => void
+    updateStatus: (status: string) => void
 }
 
 type OwnPropsType = MapStateToPropsType & MapDispatchToProps
@@ -36,7 +45,13 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 
     componentDidMount() {
         let userId = this.props.match.params.userId
-        this.props.getUserProfile(userId)
+        if(!userId){
+            if(this.props.myId != null){
+                userId = this.props.myId.toString()
+            }
+        }
+        this.props.getProfile(userId)
+        this.props.getStatus(userId)
     }
 
     render() {
@@ -45,7 +60,7 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
                 {
                     this.props.isFetching
                         ? <Preloader/>
-                        : <Profile profileInfo={this.props.profileInfo}/>
+                        : <Profile profileInfo={this.props.profileInfo} status={this.props.status} updateStatus={this.props.updateStatus}/>
                 }
             </>
 
@@ -57,14 +72,16 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         profileInfo: state.profilePage.profileInfo,
-        isFetching: state.profilePage.isFetching
+        isFetching: state.profilePage.isFetching,
+        status: state.profilePage.status,
+        myId: state.auth.id
     }
 }
 
 export default compose(
     withAuthRedirect,
     withRouter,
-    connect(mapStateToProps, {setProfile, setProfileIsFetching, getUserProfile})
+    connect(mapStateToProps, {setProfile, setProfileIsFetching, getProfile, getStatus, updateStatus})
 )(ProfileContainer)
 
 

@@ -16,8 +16,18 @@ export const usersApi = {
     onUnFollow: (userId: number) => {
         return instance.delete(`follow/${userId}`)
     },
-    getUserProfile: (userId:string ) => {
+
+}
+
+export const profileAPI = {
+    getProfile: (userId:string ) => {
         return instance.get(`profile/${userId}`)
+    },
+    getStatus: (userId: number) => {
+        return instance.get(`profile/status/${userId}`)
+    },
+    updateStatus: (status: string) => {
+        return instance.put(`profile/status/`, {status})
     }
 }
 
