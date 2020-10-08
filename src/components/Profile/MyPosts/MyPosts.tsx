@@ -12,8 +12,6 @@ type myPostsPropsType = {
 
 const MyPosts = (props: myPostsPropsType) => {
 
-    let newPostText = props.postData.newPostText
-
     const postsElements = props.postData.post.map(
         (post: PostType, index: string) => (
             <Post key={index} message={post.message} likesCount={post.likesCount}/>
