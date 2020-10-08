@@ -2,7 +2,6 @@ import Dialogs from "./Dialogs";
 import {
     ActionsDialogsTypes,
     sendMessageActionCreator,
-    updateNewMessageBodyActionCreator
 } from "../../redux/dialogsReducer";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
@@ -17,12 +16,10 @@ const mapStateToProps = (state: AppStateType) => {
 
 const mapDispatchToProps = (dispatch: (action: ActionsDialogsTypes) => void) => {
     return {
-        onSendMessageClick: () => {
-            dispatch(sendMessageActionCreator())
+        onSendMessageClick: (newMessage: string) => {
+            dispatch(sendMessageActionCreator(newMessage))
         },
-        onNewMessageChange: (text: string) => {
-            dispatch(updateNewMessageBodyActionCreator(text))
-        }
+
     }
 }
 

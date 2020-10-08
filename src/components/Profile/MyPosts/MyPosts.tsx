@@ -2,11 +2,11 @@ import React, {ChangeEvent} from "react";
 import styles from "./MyPosts.module.css";
 import Post from "./Post/Post";
 import {PostType} from "../../../redux/profileReducer";
+import {AddNewPostReduxForm} from "../../../common/Forms/AddNewPostForm/AddNewPostForm";
 
 type myPostsPropsType = {
     postData: any
-    updateNewPostText: (text: string) => void
-    addPost: () => void
+    addPost: (newPostText: string) => void
 }
 
 
@@ -20,28 +20,14 @@ const MyPosts = (props: myPostsPropsType) => {
         )
     )
 
-    const addPost = () => {
-        props.addPost();
-    }
-
-
-    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let body = e.currentTarget.value
-        props.updateNewPostText(body)
+    const addPost = (values: any) => {
+        props.addPost(values.newPostText);
     }
 
     return (
         <div className={styles.postsBlock}>
             <h3>My Post</h3>
-            <div>
-                <div>
-                    <textarea value={newPostText}
-                              onChange={onPostChange}
-                              placeholder={'Write Post'}/>
-                </div>
-                <button onClick={addPost}>Add post</button>
-                <button>Remove</button>
-            </div>
+            <AddNewPostReduxForm onSubmit={addPost}/>
             <div className={styles.posts}>
                 {postsElements}
             </div>

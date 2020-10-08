@@ -4,39 +4,35 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./DialogItem/Message/Message";
 import {dialogsType, messageType} from "../../redux/dialogsReducer";
 import {Redirect} from "react-router-dom";
+import {MessageReduxForm} from "../../common/Forms/MessageForm/MessageForm";
 
 
 type DialogsPropsType = {
     dialogsData: any
-    onSendMessageClick: () => void
-    onNewMessageChange: (text: string) => void
+    onSendMessageClick: (value: any) => void
     isAuth: boolean
 }
 
 
 const Dialogs = (props: DialogsPropsType) => {
-    let dialogsElements = props.dialogsData.dialogs.map((dialog: dialogsType, index: string) => (
+
+    const dialogsElements = props.dialogsData.dialogs.map((dialog: dialogsType, index: string) => (
             <DialogItem key={index}
                         name={dialog.name}
                         id={dialog.id}/>
         )
     )
-    let messagesElements = props.dialogsData.messages.map((message: messageType, index: string) => (
+
+    const messagesElements = props.dialogsData.messages.map((message: messageType, index: string) => (
             <Message key={index}
                      message={message.message}/>
         )
     )
-    let newMessageBody = props.dialogsData.newMessageBody
 
-
-    let onSendMessageClick = () => {
-        props.onSendMessageClick();
+    const onSendMessageClick = (value: any) => {
+        props.onSendMessageClick(value.newMessage);
     }
 
-    let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let body = e.target.value;
-        props.onNewMessageChange(body);
-    }
     if (!props.isAuth) return <Redirect to={'/login'}/>
     return (
         <div className={style.dialogs}>
@@ -45,14 +41,7 @@ const Dialogs = (props: DialogsPropsType) => {
             </div>
             <div className={style.messages}>
                 {messagesElements}
-                <div>
-                    <div><textarea value={newMessageBody}
-                                   onChange={onNewMessageChange}
-                                   placeholder={'Enter message'}/></div>
-                    <div>
-                        <button onClick={onSendMessageClick}>Send</button>
-                    </div>
-                </div>
+                <MessageReduxForm onSubmit={onSendMessageClick}/>
             </div>
         </div>
     )

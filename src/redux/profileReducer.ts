@@ -1,8 +1,7 @@
 import {PhotosType} from "./usersReducer";
-import {profileAPI, usersApi} from "./api";
+import {profileAPI} from "./api";
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
 const SET_PROFILE = 'SET_PROFILE'
 const SET_PROFILE_IS_FETCHING = 'SET_PROFILE_IS_FETCHING'
 const SET_STATUS = 'SET_STATUS'
@@ -10,7 +9,6 @@ const SET_STATUS = 'SET_STATUS'
 export type InitialProfileState = {
     profileInfo: ProfileInfoType
     post: Array<PostType>
-    newPostText: string
     isFetching: boolean
     status: string
 }
@@ -47,7 +45,6 @@ export type PostType = {
 
 export type ActionsProfileTypes =
     ReturnType<typeof addPost>
-    | ReturnType<typeof updateNewPostText>
     | ReturnType<typeof setProfile>
     | ReturnType<typeof setProfileIsFetching>
 
@@ -77,7 +74,6 @@ let initialState: InitialProfileState = {
         {id: '1', message: 'Hi, how are you?', likesCount: 5},
         {id: '2', message: 'I love React.js', likesCount: 300},
     ],
-    newPostText: '',
     isFetching: false,
 }
 
@@ -86,20 +82,14 @@ const profileReducer = (state = initialState, action: any): InitialProfileState 
         case ADD_POST: {
             const newPost: PostType = {
                 id: '3',
-                message: state.newPostText,
+                message: action.newPostText,
                 likesCount: 0
             }
             return {
                 ...state,
                 post: [...state.post, newPost],
-                newPostText: ''
             }
         }
-        case UPDATE_POST_TEXT:
-            return {
-                ...state,
-                newPostText: action.newText
-            }
         case SET_PROFILE:
             return {
                 ...state,
@@ -121,13 +111,7 @@ const profileReducer = (state = initialState, action: any): InitialProfileState 
 
 }
 
-export const addPost = () => ({type: ADD_POST} as const)
-
-export const updateNewPostText = (text: string) => ({
-        type: UPDATE_POST_TEXT,
-        newText: text
-    } as const
-)
+export const addPost = (newPostText: string) => ({type: ADD_POST, newPostText} as const)
 
 export const setProfile = (profileInfo: any) => ({
         type: SET_PROFILE,
