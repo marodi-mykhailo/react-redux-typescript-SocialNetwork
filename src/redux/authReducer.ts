@@ -9,6 +9,12 @@ export type authInitialStateType = {
     isAuth: boolean
 }
 
+type loginDataType = {
+    email: string,
+    password: string,
+    rememberMe: boolean
+}
+
 const authInitialState: authInitialStateType = {
     id: null,
     login: null,
@@ -24,8 +30,7 @@ const authReducer = (state = authInitialState, action: authActionType) => {
         case SET_USER_DATA: {
             return {
                 ...state,
-                ...action.userData,
-                isAuth:true
+                ...action.payload,
             }
         }
         default:
@@ -34,20 +39,43 @@ const authReducer = (state = authInitialState, action: authActionType) => {
 }
 
 
-export const setLoggedUserData = (userData: authInitialStateType) => ({
+export const setLoggedUserData = (id:number | null, login:string | null, email:string | null, isAuth:boolean = false) => ({
         type: SET_USER_DATA,
-        userData
+        payload: {id, login, email, isAuth}
     } as const
 )
 
 export const getLoggedUserData = () => {
-    return (dispatch: any) =>{
+    return (dispatch: any) => {
         authAPI.me()
             .then(response => {
                 if (response.data.resultCode === 0) {
-                    dispatch(setLoggedUserData(response.data.data))
+                   let {id, login, email} = response.data.data
+                    dispatch(setLoggedUserData(id, login, email, true))
                 }
 
+            })
+    }
+}
+
+export const login = ({email, password, rememberMe}: loginDataType) => {
+    return (dispatch: any) => {
+        authAPI.login(email, password, rememberMe)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(getLoggedUserData())
+                }
+            })
+    }
+}
+
+export const logOut = () => {
+    return (dispatch: any) => {
+        authAPI.logOut()
+            .then(response =>{
+                if(response.data.resultCode === 0){
+                    dispatch(setLoggedUserData(null,null,null, false))
+                }
             })
     }
 }

@@ -18,10 +18,11 @@ const LoginForm:React.FC<InjectedFormProps<FormDataType>> = (props: any) => {
         <div>
             <form onSubmit={props.handleSubmit}>
                 <div>
-                    <Field placeholder={'login'} validate={[required, maxLength30]} name={'login'} component={Input}/>
+                    <Field placeholder={'email'} validate={[required, maxLength30]} name={'email'} component={Input}/>
                 </div>
                 <div>
-                    <Field placeholder={'password'} validate={[required, maxLength12]} name={'password'} component={Input}/>
+                    <Field placeholder={'password'} validate={[required, maxLength12]} name={'password'} component={Input}
+                           type={'password'}/>
                 </div>
                 <div>
                     <Field type={'checkbox'} name={'rememberMe'} component={Input}/> remember Me

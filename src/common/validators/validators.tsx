@@ -1,5 +1,4 @@
 export const required = (value: string) => {
-    debugger
     if(value){
         return undefined
     }else {
