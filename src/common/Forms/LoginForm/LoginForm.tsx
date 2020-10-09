@@ -2,6 +2,7 @@ import {InjectedFormProps, reduxForm, Field} from "redux-form";
 import React from "react";
 import {Input} from "../../CustomsFormsComponents/CustomsFormsComponents";
 import {maxLengthCreator, required} from "../../validators/validators";
+import styles from '../../CustomsFormsComponents/CustomsFormsComponents.module.css'
 
 export type FormDataType = {
     login: string
@@ -27,6 +28,7 @@ const LoginForm:React.FC<InjectedFormProps<FormDataType>> = (props: any) => {
                 <div>
                     <Field type={'checkbox'} name={'rememberMe'} component={Input}/> remember Me
                 </div>
+                <div className={styles.errorMessage}>{props.error}</div>
                 <div>
                     <button>Login</button>
                 </div>

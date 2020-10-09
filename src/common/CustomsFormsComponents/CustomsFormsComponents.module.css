@@ -10,3 +10,8 @@
 .formControl.error span{
     color: red;
 }
+
+.errorMessage{
+    color: red;
+    font-weight: bolder;
+}
