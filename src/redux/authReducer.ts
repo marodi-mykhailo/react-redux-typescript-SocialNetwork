@@ -48,8 +48,8 @@ export const setLoggedUserData = (id: number | null, login: string | null, email
 
 export const getLoggedUserData = () => {
     return (dispatch: any) => {
-        authAPI.me()
-            .then(response => {
+       return  authAPI.me()
+           .then(response => {
                 if (response.data.resultCode === 0) {
                     let {id, login, email} = response.data.data
                     dispatch(setLoggedUserData(id, login, email, true))

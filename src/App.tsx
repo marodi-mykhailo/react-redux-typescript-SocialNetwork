@@ -1,47 +1,71 @@
 import React from 'react';
 import styles from './App.module.css'
 import NavBar from "./components/NavBar/NavBar";
-import {Route} from 'react-router-dom';
+import {Route, withRouter} from 'react-router-dom';
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
+import {connect} from "react-redux";
+import {compose} from "redux"
+import {initializeApp} from "./redux/appReducer";
+import {AppStateType} from "./redux/redux-store";
+import Preloader from "./common/Preloader";
 
-type AppPropsType = {}
 
-function App(props: AppPropsType) {
-    return (
-
-        <div>
-            <div className={styles.appWrapper}>
-                <HeaderContainer/>
-                <NavBar/>
-                <div className={styles.appWrapperContent}>
-                    <Route path='/dialogs'
-                           render={() =>
-                               <DialogsContainer/>
-                           }
-                    />
-                    <Route path='/profile/:userId?'
-                           render={() =>
-                               <ProfileContainer/>
-                           }
-                    />
-                    <Route path='/users'
-                           render={() =>
-                               <UsersContainer/>
-                           }
-                    />
-                    <Route path={'/login'}
-                           render={() => <Login/>
-                           }
-                    />
-                </div>
-            </div>
-        </div>
-
-    );
+type AppPropsType = {
+    isInitialized: boolean
+    initializeApp: () => void
 }
 
-export default App;
+class App extends React.Component<AppPropsType, any> {
+    componentDidMount() {
+        this.props.initializeApp()
+    }
+
+    render() {
+
+        if (!this.props.isInitialized) {
+            debugger
+            return <Preloader/>
+        }
+        return (
+
+            <div>
+                <div className={styles.appWrapper}>
+                    <HeaderContainer/>
+                    <NavBar/>
+                    <div className={styles.appWrapperContent}>
+                        <Route path='/dialogs'
+                               render={() =>
+                                   <DialogsContainer/>
+                               }
+                        />
+                        <Route path='/profile/:userId?'
+                               render={() =>
+                                   <ProfileContainer/>
+                               }
+                        />
+                        <Route path='/users'
+                               render={() =>
+                                   <UsersContainer/>
+                               }
+                        />
+                        <Route path={'/login'}
+                               render={() => <Login/>
+                               }
+                        />
+                    </div>
+                </div>
+            </div>
+
+        );
+    }
+}
+
+const mapStateToProps = (state: AppStateType) => ({
+    isInitialized: state.app.initialized
+})
+
+export default compose<any>(withRouter, connect(mapStateToProps, {initializeApp}))(App)
