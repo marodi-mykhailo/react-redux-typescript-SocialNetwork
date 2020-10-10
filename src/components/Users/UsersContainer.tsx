@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {
-    follow, followThunkAC, getUsers, setCurrentPage,
+    follow, followThunkAC, requestUsers, setCurrentPage,
     setUsers, toggleFollowingProgress,
     unFollow, unFollowThunkAC,
     usersType
@@ -12,6 +12,14 @@ import Preloader from "../../common/Preloader";
 import {Redirect} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux"
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from "../../redux/users-selectors";
 
 type UsersContainerType = {
     users: Array<usersType>
@@ -68,14 +76,25 @@ class UsersContainer extends React.Component<UsersContainerType> {
     }
 }
 
+// const mapStateToProps = (state: AppStateType) => {
+//     return {
+//         users: state.usersPage.users,
+//         currentPage: state.usersPage.currentPage,
+//         pageSize: state.usersPage.pageSize,
+//         totalUsersCount: state.usersPage.totalUsersCount,
+//         isFetching: state.usersPage.isFetching,
+//         followingInProgress: state.usersPage.followingInProgress,
+//     }
+// }
+
 const mapStateToProps = (state: AppStateType) => {
     return {
-        users: state.usersPage.users,
-        currentPage: state.usersPage.currentPage,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress,
+        users: getUsers(state),
+        currentPage: getCurrentPage(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state),
     }
 }
 
@@ -85,7 +104,7 @@ export default compose(
         follow,
         unFollow,
         setUsers,
-        getUsers,
+        getUsers: requestUsers,
         setCurrentPage,
         followThunkAC,
         unFollowThunkAC,
