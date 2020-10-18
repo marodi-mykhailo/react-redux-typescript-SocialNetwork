@@ -5,6 +5,7 @@ const ADD_POST = 'ADD-POST';
 const SET_PROFILE = 'SET_PROFILE'
 const SET_PROFILE_IS_FETCHING = 'SET_PROFILE_IS_FETCHING'
 const SET_STATUS = 'SET_STATUS'
+const DELETE_POST = 'DELETE_POST'
 
 export type InitialProfileState = {
     profileInfo: ProfileInfoType
@@ -47,6 +48,8 @@ export type ActionsProfileTypes =
     ReturnType<typeof addPost>
     | ReturnType<typeof setProfile>
     | ReturnType<typeof setProfileIsFetching>
+    |ReturnType<typeof setStatus>
+    | ReturnType<typeof deletePost>
 
 
 let initialState: InitialProfileState = {
@@ -77,7 +80,7 @@ let initialState: InitialProfileState = {
     isFetching: false,
 }
 
-const profileReducer = (state = initialState, action: any): InitialProfileState => {
+const profileReducer = (state = initialState, action: ActionsProfileTypes): InitialProfileState => {
     switch (action.type) {
         case ADD_POST: {
             const newPost: PostType = {
@@ -89,6 +92,9 @@ const profileReducer = (state = initialState, action: any): InitialProfileState 
                 ...state,
                 post: [...state.post, newPost],
             }
+        }
+        case "DELETE_POST":{
+            return {...state, post: state.post.filter(p => p.id != action.postId)}
         }
         case SET_PROFILE:
             return {
@@ -112,6 +118,7 @@ const profileReducer = (state = initialState, action: any): InitialProfileState 
 }
 
 export const addPost = (newPostText: string) => ({type: ADD_POST, newPostText} as const)
+export const deletePost = (postId: string) => ({type: DELETE_POST, postId} as const)
 
 export const setProfile = (profileInfo: any) => ({
         type: SET_PROFILE,
@@ -150,15 +157,14 @@ export const getStatus = (userId: number) => {
 }
 
 export const updateStatus = (status: string) => {
-    return(dispatch: any) => {
-        profileAPI.updateStatus(status).then(response =>{
-            if(response.data.resultCode===0){
+    return (dispatch: any) => {
+        profileAPI.updateStatus(status).then(response => {
+            if (response.data.resultCode === 0) {
                 dispatch(setStatus(status))
             }
         })
     }
 }
-
 
 
 export default profileReducer;
