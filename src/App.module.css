@@ -1,15 +1,19 @@
+.appBg{
+  /*background-color: #ffe1f5;*/
+}
+
 .appWrapper {
   margin: 0 auto;
   display: grid;
-  width: 1200px;
-  grid-template-areas: "h h" "n c";
+  max-width: 1200px;
+  grid-template-areas: "n c";
 
-  grid-template-rows: 60px 1fr;
   grid-template-columns: 2fr 10fr;
+  height: 100vh;
   /* grid-gap: 10px; */
 }
 
 .appWrapperContent{
   grid-area: c;
-  background-color: chartreuse;
+  /*background-color: chartreuse;*/
 }

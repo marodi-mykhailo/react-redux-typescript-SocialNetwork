@@ -27,14 +27,12 @@ class App extends React.Component<AppPropsType, any> {
     render() {
 
         if (!this.props.isInitialized) {
-            debugger
             return <Preloader/>
         }
         return (
-
-            <div>
+            <div className={styles.appBg}>
+                <HeaderContainer/>
                 <div className={styles.appWrapper}>
-                    <HeaderContainer/>
                     <NavBar/>
                     <div className={styles.appWrapperContent}>
                         <Route path='/dialogs'
