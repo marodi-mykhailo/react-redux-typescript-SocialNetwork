@@ -5,6 +5,7 @@ import MyPostsContainer from "./MyPosts/MyPostContainer";
 import {ProfileInfoType} from "../../redux/profileReducer";
 import SubscribersBox from "./SubscriberBox/SubscribersBox";
 import ProfileImg from "./ProfileImg/ProfileImg";
+import ProfilePhotos from "./ProfilePhotos/ProfilePhotos";
 
 type profilePropsType = {
     profileInfo: ProfileInfoType
@@ -18,11 +19,12 @@ const Profile = (props: profilePropsType) => {
             <div className={styles.left}>
                     <ProfileImg photo={props.profileInfo.photos}/>
                     <SubscribersBox/>
-                <MyPostsContainer />
 
             </div>
             <div className={styles.right}>
                 <ProfileInfo profileInfo={props.profileInfo} status={props.status} updateStatus={props.updateStatus}/>
+                <ProfilePhotos/>
+                <MyPostsContainer />
             </div>
         </div>
     )

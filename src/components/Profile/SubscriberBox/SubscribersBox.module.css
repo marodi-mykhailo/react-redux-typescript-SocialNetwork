@@ -7,22 +7,28 @@
 }
 
 .head {
-    padding-right: 5px;
     margin-top: 10px;
     margin-bottom: 20px;
+}
+
+.head span{
+    color: lightslategrey;
 }
 
 .box{
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .item{
-    width: 30%;
+    width: 33%;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px ;
+    color: #c44e8c;
+    cursor: pointer;
 }
 
 .item img{

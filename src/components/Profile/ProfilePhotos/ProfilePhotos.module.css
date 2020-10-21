@@ -1,0 +1,26 @@
+.profilePhotos{
+    margin: 20px 0;
+}
+
+.wrapper {
+    padding: 20px;
+    height: fit-content;
+}
+
+.head {
+    margin-bottom: 20px;
+}
+
+.head span{
+    color: lightslategrey;
+}
+
+.box{
+    display: flex;
+    justify-content: space-between;
+}
+
+.box img{
+    width: 24%;
+    cursor: pointer;
+}
