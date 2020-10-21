@@ -33,10 +33,12 @@
     padding: 5px;
     min-width: 65%;
     transition: background-color, .5s;
+    border: 1px solid transparent;
 }
 
 .input:focus-within {
     background-color: white;
+    border: 1px solid black;
 }
 
 .input input {
