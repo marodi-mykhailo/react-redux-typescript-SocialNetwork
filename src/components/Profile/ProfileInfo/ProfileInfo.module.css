@@ -1,8 +1,116 @@
-.profImg{
-    width: 100%;
-    height: 300px;
+.wrapper {
+    padding: 20px 10px 0;
+    display: flex;
 }
 
-.descriptionBlock{
-    padding: 10px;
+.profileImg {
+    padding: 10px 20px;
+    width: 30%;
+    height: fit-content;
+}
+
+.img {
+    display: block;
+    margin: 10px auto;
+}
+
+.profileImgBtn {
+    background-color: #ffc3ea;
+    font-size: 14px;
+    text-align: center;
+    margin: 10px auto;
+    display: block;
+    width: 80%;
+    padding: 10px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+
+}
+
+.descriptionBlock {
+    padding: 20px 10px 5px;
+    border-bottom: 1px solid #ffc3ea;
+}
+
+
+.infoBlock {
+    min-width: 60%;
+    margin: 0 20px;
+    padding: 20px;
+    height: fit-content;
+}
+
+.headerInfo {
+    border-bottom: 1px solid #ffc3ea;
+    padding-bottom: 15px;
+}
+
+.name {
+    font-size: 24px;
+    padding: 5px 0;
+}
+
+.infoRow {
+    display: flex;
+    width: 100%;
+    padding-bottom:15px;
+}
+
+.infoLeft {
+    width: 30%;
+}
+
+.infoRight {
+    width: 70%;
+}
+
+.descriptionBtn {
+    font-size: 14px;
+    text-align: center;
+    margin: 10px auto;
+    display: block;
+    width: 80%;
+    padding: 10px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color .5s;
+}
+
+.descriptionBtn:hover {
+    background-color: #ffc3ea;
+}
+
+.footer{
+    padding: 15px 10px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+.fBox{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    cursor: pointer;
+}
+
+.fBox:hover .fBoxText{
+    color: #c44e8c;
+    transition: color .5s;
+}
+
+.count{
+    font-size: 19px;
+    font-weight: bold;
+    padding: 5px 0;
+    color: #c44e8c;
+}
+
+.fBoxText{
+    font-size: 15px;
+    color: lightslategrey;
 }
