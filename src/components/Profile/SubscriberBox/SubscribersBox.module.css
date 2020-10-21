@@ -1,0 +1,33 @@
+.subscribersBox{
+    margin: 20px 0;
+}
+.wrapper {
+    padding: 10px 20px;
+    height: fit-content;
+}
+
+.head {
+    padding-right: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.box{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px ;
+}
+
+.item img{
+    border-radius: 50px;
+    width: 50px;
+    margin-bottom: 5px;
+
+}

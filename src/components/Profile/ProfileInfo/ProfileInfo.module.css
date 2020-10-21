@@ -1,31 +1,5 @@
 .wrapper {
-    padding: 20px 10px 0;
     display: flex;
-}
-
-.profileImg {
-    padding: 10px 20px;
-    width: 30%;
-    height: fit-content;
-}
-
-.img {
-    display: block;
-    margin: 10px auto;
-}
-
-.profileImgBtn {
-    background-color: #ffc3ea;
-    font-size: 14px;
-    text-align: center;
-    margin: 10px auto;
-    display: block;
-    width: 80%;
-    padding: 10px 0;
-    border: none;
-    cursor: pointer;
-    border-radius: 10px;
-
 }
 
 .descriptionBlock {
@@ -33,12 +7,10 @@
     border-bottom: 1px solid #ffc3ea;
 }
 
-
 .infoBlock {
-    min-width: 60%;
-    margin: 0 20px;
     padding: 20px;
     height: fit-content;
+    width: 100%;
 }
 
 .headerInfo {

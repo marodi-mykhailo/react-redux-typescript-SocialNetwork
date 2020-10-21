@@ -3,6 +3,8 @@ import styles from "../Profile/Profile.module.css";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostContainer";
 import {ProfileInfoType} from "../../redux/profileReducer";
+import SubscribersBox from "./SubscriberBox/SubscribersBox";
+import ProfileImg from "./ProfileImg/ProfileImg";
 
 type profilePropsType = {
     profileInfo: ProfileInfoType
@@ -13,8 +15,15 @@ type profilePropsType = {
 const Profile = (props: profilePropsType) => {
     return (
         <div className={styles.contentWrapper}>
-            <ProfileInfo profileInfo={props.profileInfo} status={props.status} updateStatus={props.updateStatus}/>
-            <MyPostsContainer />
+            <div className={styles.left}>
+                    <ProfileImg photo={props.profileInfo.photos}/>
+                    <SubscribersBox/>
+                <MyPostsContainer />
+
+            </div>
+            <div className={styles.right}>
+                <ProfileInfo profileInfo={props.profileInfo} status={props.status} updateStatus={props.updateStatus}/>
+            </div>
         </div>
     )
 }
