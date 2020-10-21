@@ -1,5 +1,5 @@
 .formControl{
-
+    width: 100%;
 }
 
 .formControl.error textarea,
@@ -14,4 +14,8 @@
 .errorMessage{
     color: red;
     font-weight: bolder;
+}
+
+.input{
+    width: 100%;
 }

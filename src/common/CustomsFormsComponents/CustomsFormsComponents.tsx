@@ -22,7 +22,7 @@ export const Input = ({input, meta, ...props}: CustomsFormsComponentsPropsType) 
     const hasError = meta.error && meta.touched
     return (
         <div className={styles.formControl + " " + (hasError ? styles.error : " ")}>
-            <input{...input}{...props}/>
+            <input className={styles.input} {...input}{...props}/>
             <div>{hasError && <span>{meta.error}</span>}</div>
         </div>
     );
