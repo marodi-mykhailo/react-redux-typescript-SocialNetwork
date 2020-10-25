@@ -33,8 +33,6 @@ const MyPosts = (props: myPostsPropsType) => {
 
 
             <div className={styles.postsBlock}>
-                <h3>My Post</h3>
-
                 <div className={styles.posts}>
                     {postsElements}
                 </div>

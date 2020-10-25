@@ -1,7 +1,7 @@
 import React from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {maxLengthCreator, required} from "../../validators/validators";
-import {Input, TextArea} from "../../CustomsFormsComponents/CustomsFormsComponents";
+import {maxLengthCreator} from "../../validators/validators";
+import {Input} from "../../CustomsFormsComponents/CustomsFormsComponents";
 import {Photoczka} from "../../../components/Profile/ProfileImg/ProfileImg";
 import s from './AddNewPostForm.module.css'
 
