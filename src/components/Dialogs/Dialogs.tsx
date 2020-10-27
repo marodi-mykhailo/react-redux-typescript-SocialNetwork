@@ -5,6 +5,8 @@ import Message from "./DialogItem/Message/Message";
 import {dialogsType, messageType} from "../../redux/dialogsReducer";
 import {Redirect} from "react-router-dom";
 import {MessageReduxForm} from "../../common/Forms/MessageForm/MessageForm";
+import {Paper} from "@material-ui/core";
+import MessageSearch from "./MessageSearch/MessageSearch";
 
 
 type DialogsPropsType = {
@@ -36,13 +38,14 @@ const Dialogs = (props: DialogsPropsType) => {
     if (!props.isAuth) return <Redirect to={'/login'}/>
     return (
         <div className={style.dialogs}>
-            <div className={style.dialogsItems}>
+            <Paper elevation={3} className={style.dialogsItems}>
+                <MessageSearch/>
                 {dialogsElements}
-            </div>
-            <div className={style.messages}>
-                {messagesElements}
-                <MessageReduxForm onSubmit={onSendMessageClick}/>
-            </div>
+            </Paper>
+            {/*<div className={style.messages}>*/}
+            {/*    {messagesElements}*/}
+            {/*    <MessageReduxForm onSubmit={onSendMessageClick}/>*/}
+            {/*</div>*/}
         </div>
     )
 }

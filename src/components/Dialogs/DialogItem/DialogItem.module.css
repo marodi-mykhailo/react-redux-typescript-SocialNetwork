@@ -1,0 +1,58 @@
+.wrapper {
+    /*background: #e2b4b4;*/
+    display: flex;
+    padding: 0 20px;
+    margin: 15px 0;
+}
+
+.imgBox {
+    align-self: center;
+}
+
+.imgBox img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    padding: 10px 0;
+    margin-right: 20px;
+}
+
+.secondBox {
+    align-self: center;
+    flex-grow: 2
+}
+
+.userName {
+    font-weight: bold;
+}
+
+.message {
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+}
+
+.text{
+    color: #656565;
+    font-size: 14px;
+}
+
+.message img {
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    padding-right: 5px;
+}
+
+.dateBox {
+    padding-top: 10px;
+    font-size: 12px;
+    color: #656565;
+}
+
+.messBox{
+    display: flex;
+    width: 100%;
+    padding-bottom: 5px;
+    border-bottom: 1px solid black;
+}
