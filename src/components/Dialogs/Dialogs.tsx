@@ -42,6 +42,12 @@ const Dialogs = (props: DialogsPropsType) => {
                 <MessageSearch/>
                 {dialogsElements}
             </Paper>
+            <Paper className={style.filterBox}>
+                <div className={style.wrapper}>
+                  <div className={true ? style.active:" "}><span>All Chats</span></div>
+                  <div className={false ? style.active: " "}><span>Unwatched</span></div>
+                </div>
+            </Paper>
             {/*<div className={style.messages}>*/}
             {/*    {messagesElements}*/}
             {/*    <MessageReduxForm onSubmit={onSendMessageClick}/>*/}

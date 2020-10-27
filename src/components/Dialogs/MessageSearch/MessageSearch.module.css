@@ -1,0 +1,19 @@
+.wrapper{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 1px solid black;
+}
+
+.searchBox{
+    display: flex;
+    width: 80%;
+}
+
+.iconBoxSearch{
+    padding-right: 10px;
+}
+
+.inputBox{
+    width: 100%;
+}

@@ -1,0 +1,12 @@
+.form {
+ width: 100%;
+}
+
+.field {
+    border: none;
+    width: 100%;
+}
+
+.field:focus{
+    outline: none;
+}

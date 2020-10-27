@@ -1,26 +1,40 @@
 .dialogs {
-    display: grid;
+    display: flex;
+    margin: 20px;
+    justify-content: space-between;
 }
 
 .dialogsItems {
-    padding: 10px;
+    padding-bottom: 20px;
     display: flex;
     flex-direction: column;
-    width: 70%;
-}
-
-.dialog {
-
-}
-
-.dialogsItems .active {
-    color: gold;
+    width: 74%;
 }
 
 .messages {
     padding: 10px;
 }
 
-.message {
+.filterBox{
+    height: fit-content;
+    width: 24%;
+    padding: 10px 0;
+}
 
+.wrapper{
+
+}
+
+.wrapper div{
+    padding: 10px 10px 10px 30px;
+    margin: 5px 0;
+}
+
+.wrapper div:hover {
+    background: rgba(130, 130, 130, 0.4);
+}
+
+.active{
+    background: rgba(130, 130, 130, 0.4);
+    border-left: 3px solid dodgerblue;
 }
