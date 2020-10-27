@@ -8,6 +8,8 @@
     margin-top: -2px;
 }
 
+
+
 .wrapper:hover{
     background: rgba(130, 130, 130, 0.4);
     border-bottom: 1px solid black;
@@ -68,4 +70,7 @@
     width: 100%;
     padding-bottom: 5px;
     border-bottom: 1px solid black;
+}
+.wrapper:nth-child(2) {
+    margin-top: -1px;
 }
