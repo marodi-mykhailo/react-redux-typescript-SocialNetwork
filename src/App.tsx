@@ -12,6 +12,7 @@ import {compose} from "redux"
 import {initializeApp} from "./redux/appReducer";
 import {AppStateType} from "./redux/redux-store";
 import Preloader from "./common/Preloader";
+import Register from "./components/Refister/Register";
 
 
 type AppPropsType = {
@@ -29,35 +30,42 @@ class App extends React.Component<AppPropsType, any> {
         if (!this.props.isInitialized) {
             return <Preloader/>
         }
+
+
+        if(true){
+            return  <Register/>
+        }
+
+
         return (
-            <div className={styles.appBg}>
-                <HeaderContainer/>
-                <div className={styles.appWrapper}>
-                    <NavBar/>
-                    <div className={styles.appWrapperContent}>
-                        <Route path='/dialogs'
-                               render={() =>
-                                   <DialogsContainer/>
-                               }
-                        />
-                        <Route path='/profile/:userId?'
-                               render={() =>
-                                   <ProfileContainer/>
-                               }
-                        />
-                        <Route path='/users'
-                               render={() =>
-                                   <UsersContainer/>
-                               }
-                        />
-                        <Route path={'/login'}
-                               render={() => <Login/>
-                               }
-                        />
+                <div className={styles.appBg}>
+                    <HeaderContainer/>
+                    <div className={styles.appWrapper}>
+                        <NavBar/>
+                        <div className={styles.appWrapperContent}>
+                            <Route path='/dialogs'
+                                   render={() =>
+                                       <DialogsContainer/>
+                                   }
+                            />
+                            <Route path='/profile/:userId?'
+                                   render={() =>
+                                       <ProfileContainer/>
+                                   }
+                            />
+                            <Route path='/users'
+                                   render={() =>
+                                       <UsersContainer/>
+                                   }
+                            />
+                            <Route path={'/login'}
+                                   render={() => <Login/>
+                                   }
+                            />
+
+                        </div>
                     </div>
                 </div>
-            </div>
-
         );
     }
 }

@@ -9,21 +9,24 @@ const NavBar = () => {
 
             <nav className={s.nav}>
                 <div className={s.item}>
-                    <NavLink to={`/profile`}  activeClassName={s.activeLink}><FontAwesomeIcon icon={faHouseUser}/>Profile</NavLink>
+                    <NavLink to={`/profile`}  activeClassName={s.activeLink}><span><FontAwesomeIcon icon={faHouseUser}/>Profile</span></NavLink>
                 </div>
                 <div className={`${s.item} ${s.active}`}>
-                    <NavLink to="/dialogs" activeClassName={s.activeLink}><FontAwesomeIcon icon={faComments}/>Messages</NavLink>
+                    <NavLink to="/dialogs" activeClassName={s.activeLink}><span><FontAwesomeIcon icon={faComments}/>Messages</span></NavLink>
                 </div>
                 <div className={`${s.item} ${s.active}`}>
-                    <NavLink to="/users" activeClassName={s.activeLink}><FontAwesomeIcon icon={faUsers}/>Users</NavLink>
+                    <NavLink to="/users" activeClassName={s.activeLink}><span><FontAwesomeIcon icon={faUsers}/>Users</span></NavLink>
                 </div>
 
                 <div className={s.item}>
-                    <NavLink to="/calendar" activeClassName={s.activeLink}><FontAwesomeIcon icon={faCalendarAlt}/>Calendar</NavLink>
+                    <NavLink to="/calendar" activeClassName={s.activeLink}><span><FontAwesomeIcon icon={faCalendarAlt}/>Calendar</span></NavLink>
                 </div>
 
                 <div className={s.item}>
-                    <NavLink to={'/settings'} activeClassName={s.activeLink}><FontAwesomeIcon icon={faCogs}/>Settings</NavLink>
+                    <NavLink to={'/settings'} activeClassName={s.activeLink}><span><FontAwesomeIcon icon={faCogs}/>Settings</span></NavLink>
+                </div>
+                <div className={s.item}>
+                    <NavLink to={'/register'} activeClassName={s.activeLink}><span><FontAwesomeIcon icon={faCogs}/>Register</span></NavLink>
                 </div>
             </nav>
 

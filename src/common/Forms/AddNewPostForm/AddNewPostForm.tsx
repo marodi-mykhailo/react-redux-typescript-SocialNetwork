@@ -22,7 +22,7 @@ const AddNewPostForm: React.FC<InjectedFormProps<AddNewPostFormDataType>> = (pro
                 <img src={Photoczka} alt={''}/>
                 <Field name={'newPostText'}
                        className={s.field}
-                       validate={[]}
+                       validate={[maxLength50]}
                        placeholder={'Write Post'}
                        component={Input}/>
                 <button className={s.btn}>Add post</button>
@@ -34,5 +34,3 @@ const AddNewPostForm: React.FC<InjectedFormProps<AddNewPostFormDataType>> = (pro
 export const AddNewPostReduxForm = reduxForm<AddNewPostFormDataType>({
     form: 'AddNewPostForm'
 })(AddNewPostForm)
-
-export default AddNewPostForm;

@@ -28,16 +28,17 @@ const Post = (props: PostPropsType) => {
                                 <span className={styles.online}>1 hours ago</span>
                             </div>
                         </div>
-                        <div className={styles.settingsWrapper} onMouseOver={()=>setToggleSettings(true)}
-                             onMouseOut={()=>setToggleSettings(false)}>
-                        <FontAwesomeIcon className={styles.settingsBtn} icon={faChevronDown}/>
-                        <Paper elevation={6}
-                               className={toggleSettings?styles.settingsBox:`${styles.settingsBox}  ${styles.displayNone}`}>
-                            <ul className={styles.settingsItems}>
-                                <li>Edit</li>
-                                <li>Delete</li>
-                            </ul>
-                        </Paper>
+                        <div className={styles.settingsWrapper} onMouseOver={() => setToggleSettings(true)}
+                             onMouseOut={() => setToggleSettings(false)}>
+                            <FontAwesomeIcon className={styles.settingsBtn} icon={faChevronDown}/>
+                            <Paper elevation={6}>
+                                <div  className={toggleSettings ? styles.settingsBox : `${styles.settingsBox}  ${styles.displayNone}`}>
+                                    <ul className={styles.settingsItems}>
+                                        <li>Edit</li>
+                                        <li>Delete</li>
+                                    </ul>
+                                </div>
+                            </Paper>
                         </div>
                     </div>
                     <div className={styles.content}>

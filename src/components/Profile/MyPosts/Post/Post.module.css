@@ -14,6 +14,7 @@
 
 .settingsWrapper{
     position: relative;
+    height: fit-content;
 }
 
 .settingsBox{
@@ -23,7 +24,8 @@
     right: -10px;
     border: 2px solid black;
     opacity: 1;
-    /*transition: opacity .7s ease-in-out*/
+    visibility: visible;
+    transition: opacity .5s;
 }
 
 .settingsBtn{
@@ -93,5 +95,10 @@
 }
 
 .displayNone{
+    visibility: hidden;
     opacity: 0;
+    transition: opacity .5s ease-in-out;
+}
+
+.animate{
 }

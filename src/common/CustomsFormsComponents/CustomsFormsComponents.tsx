@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './CustomsFormsComponents.module.css'
 
 type CustomsFormsComponentsPropsType = {
-    input: any,
+    input: any
     meta: any
+    type: string
+    setError: (error: boolean) => void
 }
 
 
@@ -27,4 +29,14 @@ export const Input = ({input, meta, ...props}: CustomsFormsComponentsPropsType) 
         </div>
     );
 };
+
+export const RegisterInput = ({input, type, meta: {touched, error}, setError}: CustomsFormsComponentsPropsType) => {
+    return(
+        <> <input {...input} type={type}/>
+            {touched && error && <span>{error}</span>}
+        </>
+    )
+}
+
+
 
