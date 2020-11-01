@@ -7,7 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUser} from "@fortawesome/free-solid-svg-icons/faUser";
 import {faCheckCircle} from "@fortawesome/free-solid-svg-icons/faCheckCircle";
 import {faEnvelope, faExclamationCircle, faLock} from "@fortawesome/free-solid-svg-icons";
-import {RegisterReduxForm} from "../../common/Forms/RegisterForm/RegisterForm";
+import RegisterForm from "../../common/Forms/RegisterForm/RegisterForm";
 
 const Register = () => {
 
@@ -19,7 +19,7 @@ const Register = () => {
                     <img src={welcome}/>
                 </div>
                 <div className="login-content">
-<RegisterReduxForm />
+                    <RegisterForm/>
                 </div>
             </div>
         </div>

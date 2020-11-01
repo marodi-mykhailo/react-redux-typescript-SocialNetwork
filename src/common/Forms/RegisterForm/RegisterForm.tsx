@@ -4,13 +4,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUser} from "@fortawesome/free-solid-svg-icons/faUser";
 import {faCheckCircle} from "@fortawesome/free-solid-svg-icons/faCheckCircle";
 import {faEnvelope, faExclamationCircle, faLock} from "@fortawesome/free-solid-svg-icons";
-import {reduxForm, Field, InjectedFormProps} from "redux-form";
-import {Input, RegisterInput} from "../../CustomsFormsComponents/CustomsFormsComponents";
-import {Simulate} from "react-dom/test-utils";
-import {maxLengthCreator, required, validate} from "../../validators/validators";
+import {Formik, Form, Field, ErrorMessage} from 'formik';
+import * as Yup from 'yup';
 
-
-const maxLength10 = maxLengthCreator(10)
 
 export type RegisterFormDataType = {
     username: string
@@ -20,104 +16,160 @@ export type RegisterFormDataType = {
 
 }
 
+type InitialValuesFormikType = {
+    username: string
+    email: string
+    password: string
+    password2: string
+}
 
-const RegisterForm: React.FC<InjectedFormProps<RegisterFormDataType>> = () => {
-    const [focusU, setUFocus] = useState(false)
-    const [focusE, setEFocus] = useState(false)
-    const [focusP, setPFocus] = useState(false)
-    const [focusP2, setP2Focus] = useState(false)
-    const [error, setError] = useState(false)
+const initialValues = {
+    username: '',
+    email: '',
+    password: '',
+    password2: ''
+}
 
-    const setErrorHandler = (error: boolean)=>{
-        setError(error)
+const validationSchema = Yup.object({
+    username: Yup.string().required(),
+    email: Yup.string().email().required(),
+    password: Yup.string().min(6).max(8).required(),
+    password2: Yup.string().oneOf([Yup.ref('password'), '']).required()
+})
+
+
+const onSubmit = (values: InitialValuesFormikType) => {
+    console.log(values)
+}
+
+const RegisterForm = () => {
+
+    const [focus, setFocus] = useState<any>({
+        username: false,
+        email: false,
+        password: false,
+        password2: false
+    })
+    const [value, setValue] = useState<any>({
+        username: '',
+        email: '',
+        password: '',
+        password2: ''
+    })
+
+
+    const onFocusHandler = (e: any) => {
+        setFocus({
+            ...focus,
+            [e.currentTarget.name]: true
+
+        })
+    }
+
+    const onBlurHandler = (e: any) => {
+        setFocus({
+            ...focus,
+            [e.currentTarget.name]: false
+        })
+        setValue({
+            ...value,
+            [e.currentTarget.name]: e.currentTarget.value
+        })
     }
 
     return (
-        <form id="reg__form">
-            <img src={avatar}/>
-            <h2 className="title">Waiting for you</h2>
-            <div className={focusU ? "input-div one focus" : "input-div one"}>
-                <div className="i">
-                    <FontAwesomeIcon icon={faUser}/>
-                </div>
-                <div className="div">
-                    <h5>Username</h5>
-                    <Field type="text"
-                           className="input"
-                           name="username"
-                           onFocus={() => setUFocus(true)}
-                           onBlur={() => setUFocus(false)}
-                           component={RegisterInput}/>
-                    <FontAwesomeIcon className="fas fa-check-circle" icon={faCheckCircle}/>
-                    <FontAwesomeIcon className="fas fa-exclamation-circle" icon={faExclamationCircle}/>
-                    <small className="reg__error">Error message</small>
-                </div>
-            </div>
-
-            <div className={focusE ? "input-div one focus" : "input-div one"}>
-                <div className="i">
-                    <FontAwesomeIcon icon={faEnvelope}/>
-                </div>
-                <div className={error? "div error": "div"}>
-                    <h5>Mail</h5>
-                    <Field type="email"
-                           className="input"
-                           name="email"
-                           validate={[required, maxLength10]}
-                           onFocus={() => setEFocus(true)}
-                           onBlur={() => setEFocus(false)}
-                           component={RegisterInput}/>
-                    <FontAwesomeIcon className="fas fa-check-circle" icon={faCheckCircle}/>
-                    <FontAwesomeIcon className="fas fa-exclamation-circle" icon={faExclamationCircle}/>
-                    <small className="reg__error">Error message</small>
-                </div>
-            </div>
-
-            <div className={focusP ? "input-div pass focus" : "input-div pass"}>
-                <div className="i">
-                    <FontAwesomeIcon icon={faLock}/>
-                </div>
-                <div className="div">
-                    <h5>Password</h5>
-                    <Field type="password"
-                           className="input"
-                           name="password"
-                           onFocus={() => setPFocus(true)}
-                           onBlur={() => setPFocus(false)}
-                           setError={setErrorHandler}
-                           component={RegisterInput}/>
-                    <FontAwesomeIcon className="fas fa-check-circle" icon={faCheckCircle}/>
-                    <FontAwesomeIcon className="fas fa-exclamation-circle" icon={faExclamationCircle}/>
-                    <small className="reg__error">Error message</small>
+        <Formik initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={onSubmit}>
+            <Form id="reg__form">
+                <img src={avatar}/>
+                <h2 className="title">Waiting for you</h2>
+                <div className={(focus.username || !!value.username) ? "input-div one focus" : "input-div one"}>
+                    <div className="i">
+                        <FontAwesomeIcon icon={faUser}/>
+                    </div>
+                    <div className="div">
+                        <h5>Username</h5>
+                        <Field type="text"
+                               className="input"
+                               name="username"
+                               onFocus={onFocusHandler}
+                               onBlur={onBlurHandler}
+                        />
+                        <FontAwesomeIcon className="fas fa-check-circle" icon={faCheckCircle}/>
+                        <FontAwesomeIcon className="fas fa-exclamation-circle" icon={faExclamationCircle}/>
+                        <ErrorMessage name='username'>{
+                            errorMessage => <span className={'reg__error'}>{errorMessage}</span>
+                        }</ErrorMessage>
+                    </div>
                 </div>
 
-            </div>
-            <div className={focusP2 ? "input-div pass focus" : "input-div pass"}>
-                <div className="i">
-                    <FontAwesomeIcon icon={faLock}/>
-                </div>
-                <div className="div error">
-                    <h5>Password check</h5>
-                    <Field type="password"
-                           className="input"
-                           name="password2"
-                           onFocus={() => setP2Focus(true)}
-                           onBlur={() => setP2Focus(false)}
-                           component={RegisterInput}/>
-                    <FontAwesomeIcon className="fas fa-check-circle" icon={faCheckCircle}/>
-                    <FontAwesomeIcon className="fas fa-exclamation-circle" icon={faExclamationCircle}/>
-                    <small className="reg__error">Error message</small>
+                <div className={(focus.email || !!value.email) ? "input-div one focus" : "input-div one"}>
+                    <div className="i">
+                        <FontAwesomeIcon icon={faEnvelope}/>
+                    </div>
+                    <div className={"div error"}>
+                        <h5>Mail</h5>
+                        <Field type="email"
+                               className="input"
+                               name="email"
+                               onFocus={onFocusHandler}
+                               onBlur={onBlurHandler}
+                        />
+                        <FontAwesomeIcon className="fas fa-check-circle" icon={faCheckCircle}/>
+                        <FontAwesomeIcon className="fas fa-exclamation-circle" icon={faExclamationCircle}/>
+                        <ErrorMessage name='email'>{
+                            errorMessage => <span className={'reg__error'}>{errorMessage}</span>
+                        }</ErrorMessage>
+                    </div>
                 </div>
 
-            </div>
-            <button onClick={() => {
-            }} type="submit" className="btn">Submit
-            </button>
-        </form>
+                <div className={(focus.password || !!value.password) ? "input-div pass focus" : "input-div pass"}>
+                    <div className="i">
+                        <FontAwesomeIcon icon={faLock}/>
+                    </div>
+                    <div className="div">
+                        <h5>Password</h5>
+                        <Field type="password"
+                               className="input"
+                               name="password"
+                               onFocus={onFocusHandler}
+                               onBlur={onBlurHandler}
+                        />
+                        <FontAwesomeIcon className="fas fa-check-circle" icon={faCheckCircle}/>
+                        <FontAwesomeIcon className="fas fa-exclamation-circle" icon={faExclamationCircle}/>
+                        <ErrorMessage name='password'>{
+                            errorMessage => <span className={'reg__error'}>{errorMessage}</span>
+                        }</ErrorMessage>
+                    </div>
+                </div>
+                <div className={(focus.password2 || !!value.password2) ? "input-div pass focus" : "input-div pass"}>
+                    <div className="i">
+                        <FontAwesomeIcon icon={faLock}/>
+                    </div>
+                    <div className="div error">
+                        <h5>Password check</h5>
+                        <Field type="password"
+                               className="input"
+                               name="password2"
+                               onFocus={onFocusHandler}
+                               onBlur={onBlurHandler}
+                        />
+                        <FontAwesomeIcon className="fas fa-check-circle" icon={faCheckCircle}/>
+                        <FontAwesomeIcon className="fas fa-exclamation-circle" icon={faExclamationCircle}/>
+                        <ErrorMessage name='password2'>{
+                            errorMessage => <span className={'reg__error'}>{errorMessage}</span>
+                        }</ErrorMessage>
+                    </div>
+
+                </div>
+                <button onClick={() => {
+                }} type="submit" className="btn">Submit
+                </button>
+            </Form>
+        </Formik>
     );
 };
 
-export const RegisterReduxForm = reduxForm<RegisterFormDataType>({
-    form: "RegisterForm",
-    validate
-})(RegisterForm);
+
+export default RegisterForm;

@@ -232,7 +232,7 @@ a:hover{
     bottom: -30px;
     left: -23px;
     color: #e74c3c;
-    visibility: hidden;
+    visibility: visible;
 }
 
 .div.success .fas.fa-check-circle{
