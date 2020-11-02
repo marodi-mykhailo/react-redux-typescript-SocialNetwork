@@ -233,6 +233,7 @@ a:hover{
     left: -23px;
     color: #e74c3c;
     visibility: visible;
+    font-size: 14px;
 }
 
 .div.success .fas.fa-check-circle{

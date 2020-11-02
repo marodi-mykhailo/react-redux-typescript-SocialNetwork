@@ -80,6 +80,14 @@ let initialState: InitialProfileState = {
     isFetching: false,
 }
 
+type InitialState2Type = {
+    id: string
+    username: string
+    email: string
+}
+
+
+
 const profileReducer = (state = initialState, action: ActionsProfileTypes): InitialProfileState => {
     switch (action.type) {
         case ADD_POST: {
@@ -116,6 +124,8 @@ const profileReducer = (state = initialState, action: ActionsProfileTypes): Init
     }
 
 }
+
+
 
 export const addPost = (newPostText: string) => ({type: ADD_POST, newPostText} as const)
 export const deletePost = (postId: string) => ({type: DELETE_POST, postId} as const)

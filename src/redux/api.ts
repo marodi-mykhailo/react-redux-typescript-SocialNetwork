@@ -6,6 +6,11 @@ export const instance = axios.create({
     headers: {'API-KEY': '1a3237fe-e721-4f8c-aaca-8ad848347a2d'}
 })
 
+export const instance2 = axios.create({
+    baseURL: 'http://localhost:5000/api/',
+    headers: {"Access-Control-Allow-Origin": "*"}
+})
+
 export const usersApi = {
     getUsers: (currentPage: number, pageSize: number) => {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
@@ -40,6 +45,12 @@ export const authAPI = {
     },
     logOut: () => {
         return instance.delete('auth/login')
+    }
+}
+
+export const authAPI2 ={
+    register: (username: string, email: string, password: string) => {
+        return instance2.post('auth/register', {username, email, password})
     }
 }
 
